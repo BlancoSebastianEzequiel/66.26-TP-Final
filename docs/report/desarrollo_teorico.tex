@@ -1,0 +1,93 @@
+\subsection{Speed up}
+
+Es la mejora en la velocidad de ejecución de una tarea ejecutada en dos
+arquitecturas similares con diferentes recursos.\\
+La noción de speedup fue establecida por la ley de Amdahl, que estaba
+dirigida particularmente a la computación paralela. Sin embargo, la speedup se
+puede usar más generalmente para mostrar el efecto en el rendimiento después de
+cualquier mejora en los recursos.\\
+De forma genérica se define como:
+\begin{equation}
+    speed\_up = \dfrac{Rendimiento\_con\_mejora}{Rendimiento\_sin\_mejora}
+\end{equation}
+En el caso de mejoras aplicadas a los tiempo de ejecución de una tarea:
+\begin{equation}
+    speed\_up = \dfrac{T\_ejecucion\_sin\_mejora}{T\_ejecucion\_con\_mejora}
+\end{equation}
+
+\subsection{Ley de Amdahl}
+
+Utilizada para averiguar la mejora máxima de un sistema de información cuando
+solo una parte de éste es mejorado.\\
+Establece que la mejora obtenida en el rendimiento de un sistema debido a la
+alteración de uno de sus componentes está limitada por la fracción de tiempo
+que se utiliza dicho componente.\\
+
+Suponiendo que nuestro algoritmo se divide en una parte secuencial \code{s}
+u una parte paralelizable \code{p} y siendo \code{N} la cantidad de threads,
+entonces podemos decir que:
+\begin{equation}
+    speed\_up = \dfrac{s+p}{s+\dfrac{p}{N}}
+\end{equation}
+
+Amdahl establece un límite superior al speedup que puede obtenerse al
+introducir una mejora en un determinado algoritmo. Este límite superior está
+determinado por la porción de la tarea sobre la que se aplique la mejora.
+Entonces si tomamos la ecuacion anterior y calculamos el limite de la misma con
+\code{N} tendiendo a infinito tenemos:
+\begin{equation}
+    speed\_up = \dfrac{1}{s+\dfrac{p}{s}}
+\end{equation}
+\newpage
+
+\subsection{Ley de Gustafson}
+
+Establece que cualquier problema suficientemente grande puede ser eficientemente
+paralelizado. La ley de Gustafson está muy ligada a la ley de Amdahl, que pone
+límite a la mejora que se puede obtener gracias a la paralelización, dado un
+conjunto de datos de tamaño fijo, ofreciendo así una visión pesimista del
+procesamiento paralelo. Por el contrario la ley de Gustafson  propone realizar
+mas trabajo con la misma cantidad de recursos, de esta manera aprovecho la
+paralelizacion para calcular mas cosas.\\
+
+Entonces siendo \code{s} el tiempo de la ejecucucion de la seccion serie, siendo
+\code{p} el tiempo de la ejecucion de la seccion paralela y siendo \code{N} la
+cantidad de procesadores podemos calcular el speed up como:
+\begin{equation}
+    speed\_up = \dfrac{s+p*N}{s+p}
+\end{equation}
+
+\subsection{Map-reduce}
+
+MapReduce es una técnica de procesamiento y un programa modelo de computación
+distribuida. El algoritmo MapReduce contiene dos tareas importantes.\\\\
+Map toma un conjunto de datos y se convierte en otro conjunto de datos, en el
+que los elementos se dividen en tuplas (pares: clave, valor).\\
+
+Reduce toma la salida de un mapa como entrada y combina los datos tuplas en un
+conjunto más pequeño de tuplas.\\
+
+La principal ventaja de MapReduce es que es fácil de escalar procesamiento de
+datos en múltiples nodos.\\
+
+De acuerdo a este modelo, basado en la programación funcional, la tarea del
+usuario consiste en la definición de una función map y una función reduce y
+definidas estas funciones, el procesamiento es fácilmente paralelizable, ya sea
+en una sola máquina o en un cluster.\\
+
+En este trabajo se implementará una versión simplificada del problema clásico
+que consiste en multiplicar dos matrices de NxN.
+Lo que se hace es modificar la manera clasica en la que se multiplica las matrices
+de manera tal que podamos dividir la misma en sumas y cada una es la entrada de
+la función map.
+Tenemos que hacer un pre-procesamiento el cual consiste en generar una lista de
+tuplas a partir de las dos matrices. Se itera por cada elemento (\code{ai\_ij})
+de la matriz A y se guarda en cada tupla el numero de fila del elemento
+\code{ai\_ij}, el elemento \code{ai\_ij} y la fila \code{j} de la matriz B.\\
+
+De esta manera, en la funcion map, obtenemos esta lista de tuplas y devolvemos
+un par clave, valor donde la clave es la posicion de salida de la matriz
+resultante (i, j) y el valor es la multiplicacion del elemento \code{ai\_ij}
+contra el elemento de la fila j de la columna B en la columna \code{k}
+\code{b\_jk} para k=0, \..., N. \\
+Pseudocódigo:

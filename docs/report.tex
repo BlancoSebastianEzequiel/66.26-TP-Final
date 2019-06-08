@@ -1,0 +1,37 @@
+\input{report/packages.tex}
+\input{report/settings.tex}
+
+\begin{document}		
+	\input{report/caratula.tex}
+	\pagenumbering{arabic}
+	\newpage
+	% ÍNDICE
+	\tableofcontents
+	\newpage
+	\pagenumbering{arabic}
+
+	\graphicspath{{../docs/report/pics/}}
+
+	\section{Objetivo}
+		\input{report/objetivo.tex}
+
+	\newpage
+	\section{Desarrollo teorico}
+		\input{report/desarrollo_teorico.tex}
+
+	\newpage
+	\section{Implementacion}
+		\input{report/implementacion.tex}
+
+	\newpage
+	\section{Resultados amdahl}
+		\input{report/resultados_amdahl.tex}
+
+	\newpage
+	\section{Resultados gustafson}
+		\input{report/resultados_gustafson.tex}
+
+	\newpage
+	\section{Conclusiones}
+		\input{report/conclusiones.tex}
+\end{document}

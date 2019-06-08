@@ -1,0 +1,60 @@
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=blue
+}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}  % lineas punteadas en la tabla de contenidos
+\setlength{\oddsidemargin}{15.5pt}
+\backgroundsetup{contents={}} %Saca el 'draft'
+\definecolor{mygray}{rgb}{0.95,0.95,0.95}
+\lstset{
+    basicstyle=\footnotesize,
+    backgroundcolor=\color{mygray},
+    breaklines=true,
+    breakatwhitespace=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    language=C,
+    frame=none,
+    title=\lstname,
+}
+\def\labelitemi{$\bullet$}
+
+
+%-------------------------------------------------------------------------------
+% add \paragraph{} to table of contents
+%-------------------------------------------------------------------------------
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+\newcommand\simpleparagraph[1]{%
+  \stepcounter{paragraph}\paragraph*{\theparagraph\quad{}#1}}
+%-------------------------------------------------------------------------------
+% Esto es para que los paragraph no tengan problema cuando un figure este debajo
+% ya que si no el mismo se posiciona despues de un figure
+%-------------------------------------------------------------------------------
+% Esto lo saque de aca: https://tex.stackexchange.com/questions/60209/how-to-add-an-extra-level-of-sections-with-headings-below-subsubsection
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\titleformat{\subparagraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\subparagraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+%-------------------------------------------------------------------------------
+
+% Esto lo saque de aca: https://tex.stackexchange.com/questions/36030/how-to-make-a-single-word-look-as-some-code
+% Better inline directory listings
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
+
