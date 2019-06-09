@@ -1,11 +1,8 @@
 import sys
 from src.controller.measurer import Measurer
 from src.controller.map_reduce import MapReduce
-from src.controller.matrix_multiplication import get_random_matrix_of_dim_n
-from src.controller.matrix_multiplication import multiply, pre_processing
-from src.controller.matrix_multiplication import multiply_two_matrices
-from src.controller.matrix_multiplication import split
-from src.controller.matrix_multiplication import map_worker, reduce_worker
+from src.controller.utils import get_random_matrix_of_dim_n
+from src.model.element_by_row_block import ElementByRowBlock
 from src.controller.generate_output_data import OutputData
 
 
@@ -38,12 +35,14 @@ def run(num_workers, matrix_dim, serial_min_error, parallel_min_error):
 
     parallel = Measurer()
     serial = Measurer()
-    # mapper = MapReduce(pre_processing, multiply)
+    map_worker = ElementByRowBlock.map_worker
+    reduce_worker = ElementByRowBlock.reduce_worker
     mapper = MapReduce(map_worker, reduce_worker)
+
     matrix_a = get_random_matrix_of_dim_n(matrix_dim)
     matrix_b = get_random_matrix_of_dim_n(matrix_dim)
-    input_data = split(matrix_a, matrix_b)
-    # input_data = [(matrix_a, matrix_b)]
+
+    input_data = ElementByRowBlock.pre_processing(matrix_a, matrix_b)
 
     for i in range(500):
         partitioned_data = mapper.map(input_data, num_workers=num_workers)
