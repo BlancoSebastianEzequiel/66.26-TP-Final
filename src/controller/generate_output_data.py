@@ -9,10 +9,8 @@ class OutputData:
     def __init__(self):
         self.data = {
             'number_of_threads': [],
-            'parallel_median_time': [],
-            'parallel_error': [],
-            'serial_median_time': [],
-            'serial_error': [],
+            'parallel_time': [],
+            'serial_time': [],
             'matrix_dimension': []
         }
         self._colors = ['b-', 'g-', 'r-', 'c-', 'm-', 'y-', 'k-', 'w-']
@@ -22,10 +20,8 @@ class OutputData:
 
     def add_data(self, serial, parallel, num_workers, matrix_dimension):
         self.data['number_of_threads'].append(num_workers)
-        self.data['parallel_median_time'].append(parallel.get_mean())
-        self.data['parallel_error'].append(parallel.get_error())
-        self.data['serial_median_time'].append(serial.get_mean())
-        self.data['serial_error'].append(serial.get_error())
+        self.data['parallel_time'].append(parallel)
+        self.data['serial_time'].append(serial)
         self.data['matrix_dimension'].append(matrix_dimension)
 
     @staticmethod
@@ -59,15 +55,15 @@ class OutputData:
         df = pd.DataFrame(data=self.data)
         columns = [
             'number_of_threads',
-            'parallel_median_time',
-            'serial_median_time'
+            'parallel_time',
+            'serial_time'
         ]
         df = df.loc[:, columns]
         df['theoretical_speed_up'] = [0]*len(df.index)
         df['theoretical_speed_up'] = df.apply(
             lambda x: self.amdahl_speed_up(
-                self.data['serial_median_time'][0],
-                self.data['parallel_median_time'][0],
+                self.data['serial_time'][0],
+                self.data['parallel_time'][0],
                 x['number_of_threads']
             ),
             axis=1
@@ -75,8 +71,8 @@ class OutputData:
         df['real_speed_up'] = [0]*len(df.index)
         df['real_speed_up'] = df.apply(
             lambda x: self.amdahl_speed_up(
-                x['serial_median_time'],
-                x['parallel_median_time'],
+                x['serial_time'],
+                x['parallel_time'],
                 x['number_of_threads']
             ),
             axis=1
@@ -85,8 +81,8 @@ class OutputData:
         df['max_speed_up'] = [0] * len(df.index)
         df['max_speed_up'] = df.apply(
             lambda x: self.amdahl_max_speed_up(
-                x['serial_median_time'],
-                x['parallel_median_time']
+                x['serial_time'],
+                x['parallel_time']
             ),
             axis=1
         )
@@ -173,17 +169,17 @@ class OutputData:
         df = pd.DataFrame(data=self.data)
         columns = [
             'matrix_dimension',
-            'parallel_median_time',
-            'serial_median_time'
+            'parallel_time',
+            'serial_time'
         ]
         df = df.loc[:, columns]
         self.save_df_data(
             df,
-            ['parallel_median_time', 'serial_median_time'],
+            ['parallel_time', 'serial_time'],
             'matrix_dimension',
             {
-                'parallel_median_time': 'b-',
-                'serial_median_time': 'r-'
+                'parallel_time': 'b-',
+                'serial_time': 'r-'
             },
             filename,
             True
@@ -193,15 +189,15 @@ class OutputData:
         df = pd.DataFrame(data=self.data)
         columns = [
             'matrix_dimension',
-            'parallel_median_time',
-            'serial_median_time'
+            'parallel_time',
+            'serial_time'
         ]
         df = df.loc[:, columns]
         df['speed_up'] = [0] * len(df.index)
         df['speed_up'] = df.apply(
             lambda x: self.gustafson_speed_up(
-                x['serial_median_time'],
-                x['parallel_median_time'],
+                x['serial_time'],
+                x['parallel_time'],
                 x['matrix_dimension']
             ),
             axis=1
