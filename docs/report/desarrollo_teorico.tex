@@ -74,20 +74,3 @@ De acuerdo a este modelo, basado en la programación funcional, la tarea del
 usuario consiste en la definición de una función map y una función reduce y
 definidas estas funciones, el procesamiento es fácilmente paralelizable, ya sea
 en una sola máquina o en un cluster.\\
-
-En este trabajo se implementará una versión simplificada del problema clásico
-que consiste en multiplicar dos matrices de NxN.
-Lo que se hace es modificar la manera clasica en la que se multiplica las matrices
-de manera tal que podamos dividir la misma en sumas y cada una es la entrada de
-la función map.
-Tenemos que hacer un pre-procesamiento el cual consiste en generar una lista de
-tuplas a partir de las dos matrices. Se itera por cada elemento (\code{ai\_ij})
-de la matriz A y se guarda en cada tupla el numero de fila del elemento
-\code{ai\_ij}, el elemento \code{ai\_ij} y la fila \code{j} de la matriz B.\\
-
-De esta manera, en la funcion map, obtenemos esta lista de tuplas y devolvemos
-un par clave, valor donde la clave es la posicion de salida de la matriz
-resultante (i, j) y el valor es la multiplicacion del elemento \code{ai\_ij}
-contra el elemento de la fila j de la columna B en la columna \code{k}
-\code{b\_jk} para k=0, \..., N. \\
-Pseudocódigo:

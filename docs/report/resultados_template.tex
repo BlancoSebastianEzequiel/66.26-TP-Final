@@ -1,0 +1,89 @@
+\paragraph{Salida Amdahl}
+
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Salida de los tiempos en serie y paralelo}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_amdahl_output_table.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
+
+    De acuerdo a estos datos podemos calcular el speed up maximo, real y teórico.
+
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Speed up real, teorico y maximo segun la cantidad de threads}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_amdahl_speed_up_table.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Grafico}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_amdahl_speed_up.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
+
+    \analisisAmdahl
+
+\paragraph{Salida Gustafson}
+
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Salida de los tiempos en serie y paralelo con el error}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_gustafson_output_table.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
+
+    \analisisGustafson
+
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Tiempos en serie y paralelo}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_gustafson_exec_time_table.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Tiempo paralelo y serie en funcion de la dimension de las matrices de entrada}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_gustafson_exec_time.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
+
+    Luego a partir de estos datos podemos calcular el speed up y obtuvimos lo
+    siguiente:
+
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Tabla de valores del speed up}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_gustafson_speed_up_table.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
+    \begin{figure}[ht]
+        \begin{adjustbox}{addcode={
+            \begin{minipage}{\width}}{
+                \caption{Grafico del speed up}
+            \end{minipage}},rotate=360,center}
+            \includegraphics[scale=.6]{\model_gustafson_speed_up.png}
+        \end{adjustbox}
+    \end{figure}
+    \FloatBarrier
