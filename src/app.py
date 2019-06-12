@@ -1,4 +1,5 @@
 from typing import Type
+from math import ceil
 from src.controller.map_reduce import MapReduce
 from src.controller.utils import get_random_matrix_of_dim_n
 from src.model.element_by_row_block import ElementByRowBlock
@@ -41,7 +42,9 @@ def run(num_workers, matrix_dim, model: Type[MultiplyMatricesInterface]):
     matrix_a = get_random_matrix_of_dim_n(matrix_dim)
     matrix_b = get_random_matrix_of_dim_n(matrix_dim)
 
-    input_data = model.pre_processing(matrix_a, matrix_b)
+    div = ceil(matrix_dim/2)
+
+    input_data = model.pre_processing(matrix_a, matrix_b, row_p=div, col_p=div)
 
     partitioned_data = mapper.map(input_data, num_workers=num_workers)
     mapper.reduce(partitioned_data)
