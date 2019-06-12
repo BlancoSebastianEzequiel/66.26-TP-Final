@@ -4,7 +4,7 @@ from src.model.multiply_matrices_interface import MultiplyMatricesInterface
 class ElementByRowBlock(MultiplyMatricesInterface):
 
     @staticmethod
-    def pre_processing(matrix_a, matrix_b):
+    def pre_processing(matrix_a, matrix_b, **kwargs):
         row_size = len(matrix_a)
         col_size = len(matrix_a[0])
         output = []

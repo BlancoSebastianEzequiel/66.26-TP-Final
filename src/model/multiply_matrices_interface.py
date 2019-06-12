@@ -1,7 +1,7 @@
 class MultiplyMatricesInterface:
 
     @staticmethod
-    def pre_processing(matrix_a, matrix_b):
+    def pre_processing(matrix_a, matrix_b, **kwargs):
         raise NotImplementedError
 
     @staticmethod

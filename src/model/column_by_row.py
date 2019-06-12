@@ -4,7 +4,7 @@ from src.model.multiply_matrices_interface import MultiplyMatricesInterface
 class ColumnByRow(MultiplyMatricesInterface):
 
     @staticmethod
-    def pre_processing(matrix_a, matrix_b):
+    def pre_processing(matrix_a, matrix_b, **kwargs):
         N = len(matrix_a)
         output = []
         for i in range(0, N):

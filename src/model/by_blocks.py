@@ -6,10 +6,12 @@ from src.controller.utils import get_partitions
 class ByBlocks(MultiplyMatricesInterface):
 
     @staticmethod
-    def pre_processing(matrix_a, matrix_b):
+    def pre_processing(matrix_a, matrix_b, **kwargs):
         output = []
-        blocks_a = get_partitions(matrix_a, 2, 2)
-        blocks_b = get_partitions(matrix_b, 2, 2)
+        row_p = kwargs.get('row_p', 2)
+        col_p = kwargs.get('col_p', 2)
+        blocks_a = get_partitions(matrix_a, row_p, col_p)
+        blocks_b = get_partitions(matrix_b, row_p, col_p)
         for idx, elem_a in enumerate(blocks_a):
             r, c, block = elem_a
             row_blocks = []
