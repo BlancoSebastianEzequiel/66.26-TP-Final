@@ -45,7 +45,7 @@ class MapReduce(object):
         """
         self.statistics.start('global')
         self.statistics.start('parallel')
-        pool = multiprocessing.Pool(num_workers)
+        pool = multiprocessing.Pool(processes=num_workers)
         map_responses = pool.map(
             self.map_func,
             inputs,
