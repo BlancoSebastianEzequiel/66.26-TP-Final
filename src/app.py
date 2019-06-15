@@ -28,7 +28,7 @@ def amdahl(model: Type[MultiplyMatricesInterface], name):
     for num_workers in [1, 2, 3, 4, 8, 16, 32]:
         print(f"RUNNING WITH NUM WORKERS: {num_workers}")
         serial, parallel = run(num_workers, 10, model)
-        output_data.add_data(serial, parallel, num_workers, 10)
+        output_data.add_data(serial, parallel, num_workers, 500)
     output_data.save_data(name + '_amdahl_output.png')
     output_data.graph_amdahl_speed_up(name + '_amdahl_speed_up.png')
     output_data.save_df_data_to_json()
