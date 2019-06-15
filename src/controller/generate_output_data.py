@@ -86,6 +86,8 @@ class OutputData:
             ),
             axis=1
         )
+        max_speed_up = df['max_speed_up'][0]
+        df['max_speed_up'] = df['max_speed_up'].map(lambda x: max_speed_up)
 
         columns = [
             'number_of_threads',
