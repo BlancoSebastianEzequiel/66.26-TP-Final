@@ -12,7 +12,7 @@ from src.controller.generate_output_data import OutputData
 def gustafson(model: Type[MultiplyMatricesInterface], name):
     print(f"------------RUNNING GUSTAFSON------------")
     output_data = OutputData()
-    for matrix_dim in [2, 4, 8, 16, 32, 64]:
+    for matrix_dim in [2, 4, 8, 16, 32, 64, 100, 300]:
         print(f"RUNNING WITH MATRIX DIMENSION: {matrix_dim}")
         serial, parallel = run(4, matrix_dim, model)
         output_data.add_data(serial, parallel, 4, matrix_dim)
