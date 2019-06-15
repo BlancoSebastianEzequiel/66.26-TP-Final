@@ -25,7 +25,7 @@ def gustafson(model: Type[MultiplyMatricesInterface], name):
 def amdahl(model: Type[MultiplyMatricesInterface], name):
     print(f"------------RUNNING AMDAHL------------")
     output_data = OutputData()
-    for num_workers in [1, 2, 4, 8, 16, 32]:
+    for num_workers in [1, 2, 3, 4, 8, 16, 32]:
         print(f"RUNNING WITH NUM WORKERS: {num_workers}")
         serial, parallel = run(num_workers, 10, model)
         output_data.add_data(serial, parallel, num_workers, 10)
