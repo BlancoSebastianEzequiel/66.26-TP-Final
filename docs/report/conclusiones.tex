@@ -1,26 +1,9 @@
-Podemos decir que en ambos casos (Amdahl y Gustafson) obtuvimos rsultados
-esperados. Es cierto que no fueron resultados perfectos ya que hubo puntos
-criticos donde el resultado no era del todo esperado como por ejemplo cuando en
-el caso de la ley de Gustafson, al multiplicar dos matrices de 64x64, la seccion
-serie aumento significativamente su tiempo de ejecucion. Esto se debe a que con
-solo conocer los datos de memoria, velocidad de reloj y cantidad de cores no es
-suficiente ya que la pc cuenta con un recolector de basura que optimiza el
-reordenamiento de datos al momento del reduce y mejora su tiempo de ejecucion.\\
-Respecto a la ley de Amdahl obtuvimos resultados buenos donde reflejamos que
-mejora el procesamiento en paralelo cuanto mas threads tenemos para una misma
-cantidad de trabajo.
-Finalmente este trabajo muestra el poder de escalabilidad que tiene el map-reduce
-porque permite dividir el trabajo de manera eficiente y ademas se emplea
-generalmente en aquellos problemas de Computación concurrente entre los que se
-encuentran involucrados grandes datasets que deben ser procesandos por una gran
-cantidad de computadoras (nodos), a los que se refiere de forma colectiva como
-clusteres (si todos los nodos se encuentran en la misma red de área local y
-empleando el mismo hardware), o a grids (si los nodos se comparten de forma
-distribuida a lo largo de extensas zonas geográficas o administrativas, y que
-generalmente poseen un hardware más heterogéneo). \\
-El procesamiento paralelo puede ocurrir con el empleo de datos almacenados
-tanto en filesystem (no estructurado) o en una database (estructurados).
-Es por esta razón por la que se emplea en aplicaciones que poseen datos a
-gran escala, tales como aplicaciones paralelas, indexación web, data mining, y
-simulación científica.
-
+Podemos decir que nuestros resultados no son lo que deberia ocurrir en un ambiente
+ideal donde solo nuestro porceso corre.
+En la parte de amdahl, el speedup sigue aumentando aún cuando la cantidad  de
+threads de procesamiento supera la cantidad de threads del sistema (4). Esto no
+es lo que se esperaba. Ocurre que al aumentar la cantidad de threads, la sección
+serie del problema no se mantuvo sino que tuvo una pequeña variacion
+equilibrando la caída de performance de la sección paralela. Esta disminución
+en el tiempo de la parte serie del problema se debe a la forma en que quedan
+organizados los datos una vez que son procesados por los map\_workers .
