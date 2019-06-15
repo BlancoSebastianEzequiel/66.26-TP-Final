@@ -34,7 +34,7 @@ class MapReduce(object):
             partitioned_data[key].append(value)
         return partitioned_data.items()
 
-    def map(self, inputs, chunksize=1, num_workers=None):
+    def map(self, inputs, num_workers=None):
         """
         :param inputs: data to map-reduce
         :param chunksize: The portion of the input data to hand to each worker.
@@ -43,6 +43,9 @@ class MapReduce(object):
         Defaults to the number of CPUs available on the current host.
         :return: Process the inputs through the map and reduce functions given.
         """
+        chunksize = int(len(inputs)/num_workers)
+        if chunksize == 0:
+            chunksize = 1
         self.statistics.start('global')
         self.statistics.start('parallel')
         pool = multiprocessing.Pool(processes=num_workers)
