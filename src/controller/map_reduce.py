@@ -35,10 +35,8 @@ class MapReduce(object):
         Returns an unsorted sequence of tuples with a key and a sequence of
         values.
         """
-        print(f"mapped_values: {mapped_values}")
         mapped_values = itertools.chain(*mapped_values)
         partitioned_data = collections.defaultdict(list)
-        print(f"mapped_values: {mapped_values}")
         for key, value in mapped_values:
             partitioned_data[key].append(value)
         return partitioned_data.items()
