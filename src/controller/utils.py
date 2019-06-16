@@ -75,3 +75,18 @@ def print_matrix(matrix):
     rows = len(matrix)
     for i in range(0, rows):
         print(f"{matrix[i]}\n")
+
+
+def chunks(a_list, num):
+    """
+    :param a_list: a list to split in n chunks
+    :param num: number of chunks
+    :return: list splitted
+    """
+    avg = len(a_list) / float(num)
+    out = []
+    last = 0.0
+    while last < len(a_list):
+        out.append(a_list[int(last):int(last + avg)])
+        last += avg
+    return out
