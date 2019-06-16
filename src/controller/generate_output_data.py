@@ -112,8 +112,16 @@ class OutputData:
 
     def graph(self, df, y_axis, x_axis, colors, graph_name):
         for field in y_axis:
-            plt.plot(df[x_axis], df[field], colors[field], label=field)
+            plt.plot(
+                df[x_axis],
+                df[field],
+                colors[field],
+                label=field,
+                marker='o',
+                linestyle='dashed'
+            )
         plt.xlabel(x_axis)
+        plt.yscale('linear')
         plt.legend(loc='best')
         plt.savefig(self.pics_path + graph_name)
         plt.clf()
