@@ -1,6 +1,7 @@
 from typing import Type
 from math import ceil
-from src.controller.map_reduce import MapReduce
+from src.controller.threaded import Threaded as MapReduce
+# from src.controller.pool import Pool as MapReduce
 from src.controller.utils import get_random_matrix_of_dim_n
 from src.model.element_by_row_block import ElementByRowBlock
 from src.model.column_by_row import ColumnByRow
