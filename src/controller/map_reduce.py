@@ -1,6 +1,5 @@
 import collections
 import itertools
-import multiprocessing
 from src.controller.statistics import Statistics
 
 
@@ -19,6 +18,13 @@ class MapReduce(object):
         self.reduce_func = reduce_func
         self.statistics = Statistics()
 
+    @staticmethod
+    def get_chunksize(inputs, num_workers):
+        chunksize = int(len(inputs) / num_workers)
+        if chunksize == 0:
+            return 1
+        return chunksize
+
     def get_statistics(self):
         return self.statistics
 
@@ -29,7 +35,10 @@ class MapReduce(object):
         Returns an unsorted sequence of tuples with a key and a sequence of
         values.
         """
+        print(f"mapped_values: {mapped_values}")
+        mapped_values = itertools.chain(*mapped_values)
         partitioned_data = collections.defaultdict(list)
+        print(f"mapped_values: {mapped_values}")
         for key, value in mapped_values:
             partitioned_data[key].append(value)
         return partitioned_data.items()
@@ -39,37 +48,13 @@ class MapReduce(object):
         :param inputs: data to map-reduce
         :param chunksize: The portion of the input data to hand to each worker.
         This can be used to tune performance during the mapping phase.
-        :param num_workers: The number of workers to create in the pool.
-        Defaults to the number of CPUs available on the current host.
+        :param num_workers: The number of workers to create.
         :return: Process the inputs through the map and reduce functions given.
         """
-        chunksize = int(len(inputs)/num_workers)
-        if chunksize == 0:
-            chunksize = 1
-        self.statistics.start('global')
-        self.statistics.start('parallel')
-        pool = multiprocessing.Pool(processes=num_workers)
-        map_responses = pool.map(
-            self.map_func,
-            inputs,
-            chunksize=chunksize
-        )
-        pool.close()
-        self.statistics.stop('parallel')
-        partitioned_data = self.partition(itertools.chain(*map_responses))
-        return partitioned_data
 
     def reduce(self, partitioned_data, num_workers=1):
         """
         :param partitioned_data:
-        :param num_workers: The number of workers to create in the pool.
-        Defaults to the number of CPUs available on the current host.
+        :param num_workers: The number of workers to create.
         :return:
         """
-        self.statistics.start('serial')
-        pool = multiprocessing.Pool(num_workers)
-        reduced_values = pool.map(self.reduce_func, partitioned_data)
-        pool.close()
-        self.statistics.stop('serial')
-        self.statistics.stop('global')
-        return reduced_values
