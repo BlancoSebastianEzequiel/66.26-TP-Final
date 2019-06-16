@@ -200,7 +200,7 @@ class OutputData:
             lambda x: self.gustafson_speed_up(
                 x['serial_time'],
                 x['parallel_time'],
-                x['matrix_dimension']
+                self.data['number_of_threads'][0]
             ),
             axis=1
         )
