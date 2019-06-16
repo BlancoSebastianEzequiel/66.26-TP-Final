@@ -10,7 +10,8 @@ from src.model.multiply_matrices_interface import MultiplyMatricesInterface
 from src.controller.generate_output_data import OutputData
 
 
-def gustafson(model: Type[MultiplyMatricesInterface], name):
+def gustafson(model: Type[MultiplyMatricesInterface]):
+    name = model.__name__
     print(f"------------RUNNING GUSTAFSON------------")
     output_data = OutputData()
     for matrix_dim in [2, 4, 8, 16, 32, 64, 100, 300]:
@@ -23,7 +24,8 @@ def gustafson(model: Type[MultiplyMatricesInterface], name):
     output_data.save_df_data_to_json()
 
 
-def amdahl(model: Type[MultiplyMatricesInterface], name):
+def amdahl(model: Type[MultiplyMatricesInterface]):
+    name = model.__name__
     print(f"------------RUNNING AMDAHL------------")
     output_data = OutputData()
     for num_workers in [1, 2, 3, 4, 8, 16, 32]:
@@ -56,33 +58,15 @@ def run(num_workers, matrix_dim, model: Type[MultiplyMatricesInterface]):
     return serial_time, parallel_time
 
 
+def run_model(model: Type[MultiplyMatricesInterface]):
+    print(f"**************************************")
+    print(f"{model.__name__}")
+    print(f"**************************************")
+    amdahl(model)
+    gustafson(model)
+
+
 OutputData.delete_all_data()
-print(f"**************************************")
-print(f"ElementByRowBlock")
-print(f"**************************************")
-amdahl(ElementByRowBlock, ElementByRowBlock.__name__)
-
-print(f"**************************************")
-print(f"ColumnByRow")
-print(f"**************************************")
-amdahl(ColumnByRow, ColumnByRow.__name__)
-
-print(f"**************************************")
-print(f"ByBlocks")
-print(f"**************************************")
-amdahl(ByBlocks, ByBlocks.__name__)
-
-print(f"**************************************")
-print(f"ElementByRowBlock")
-print(f"**************************************")
-gustafson(ElementByRowBlock, ElementByRowBlock.__name__)
-
-print(f"**************************************")
-print(f"ColumnByRow")
-print(f"**************************************")
-gustafson(ColumnByRow, ColumnByRow.__name__)
-
-print(f"**************************************")
-print(f"ByBlocks")
-print(f"**************************************")
-gustafson(ByBlocks, ByBlocks.__name__)
+run_model(ElementByRowBlock)
+run_model(ColumnByRow)
+run_model(ByBlocks)
