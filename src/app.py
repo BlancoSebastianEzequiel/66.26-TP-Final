@@ -56,7 +56,7 @@ def run(num_workers, matrix_dim, model: Type[MultiplyMatricesInterface]):
     return serial_time, parallel_time
 
 
-# OutputData.delete_all_data()
+OutputData.delete_all_data()
 print(f"**************************************")
 print(f"ElementByRowBlock")
 print(f"**************************************")
