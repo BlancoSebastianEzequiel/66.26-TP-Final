@@ -20,6 +20,10 @@ def get_null_matrix_of_dim_n(N):
     return random_matrix.tolist()
 
 
+def get_null_list_of_dim_n(N):
+    return np.zeros(N).tolist()
+
+
 def get_partitions(matrix, row_p, col_p):
     N = len(matrix)
     col_size_p = ceil(N/col_p)

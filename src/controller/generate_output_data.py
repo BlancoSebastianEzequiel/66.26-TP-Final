@@ -3,6 +3,7 @@ import os
 import pandas as pd
 from subprocess import call
 import matplotlib.pyplot as plt
+from src.controller.utils import get_null_list_of_dim_n
 
 
 class OutputData:
@@ -59,7 +60,7 @@ class OutputData:
             'serial_time'
         ]
         df = df.loc[:, columns]
-        df['theoretical_speed_up'] = [0]*len(df.index)
+        df['theoretical_speed_up'] = get_null_list_of_dim_n(len(df.index))
         df['theoretical_speed_up'] = df.apply(
             lambda x: self.amdahl_speed_up(
                 self.data['serial_time'][0],
@@ -68,7 +69,7 @@ class OutputData:
             ),
             axis=1
         )
-        df['real_speed_up'] = [0]*len(df.index)
+        df['real_speed_up'] = get_null_list_of_dim_n(len(df.index))
         df['real_speed_up'] = df.apply(
             lambda x: self.amdahl_speed_up(
                 x['serial_time'],
@@ -78,7 +79,7 @@ class OutputData:
             axis=1
         )
 
-        df['max_speed_up'] = [0] * len(df.index)
+        df['max_speed_up'] = get_null_list_of_dim_n(len(df.index))
         df['max_speed_up'] = df.apply(
             lambda x: self.amdahl_max_speed_up(
                 x['serial_time'],
