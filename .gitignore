@@ -1,3 +1,7 @@
 .idea/
 venv/
 *__pycache__*
+src/metastore_db/
+src/derby.log
+src/.ipynb_checkpoints/
+src/CPU_stats.ipynb
