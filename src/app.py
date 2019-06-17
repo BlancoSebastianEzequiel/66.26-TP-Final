@@ -1,3 +1,4 @@
+import time
 from typing import Type
 from math import ceil
 # from src.controller.threaded import Threaded as MapReduce
@@ -10,19 +11,23 @@ from src.model.multiply_matrices_interface import MultiplyMatricesInterface
 from src.controller.generate_output_data import OutputData
 
 
+SAVE = True
+
+
 def gustafson(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING GUSTAFSON------------")
     output_data = OutputData()
     num_workers = 4
-    for matrix_dim in [2, 4, 8, 16, 32, 64, 100, 300]:
+    for matrix_dim in [2, 4, 8, 16, 32, 64, 100, 200, 300, 400]:
         print(f"RUNNING WITH MATRIX DIMENSION: {matrix_dim}")
         serial, parallel = run(num_workers, matrix_dim, model)
         output_data.add_data(serial, parallel, num_workers, matrix_dim)
-    output_data.save_data(name + '_gustafson_output.png')
-    output_data.graph_gustafson_exec_time(name + '_gustafson_exec_time.png')
-    output_data.graph_gustafson_speed_up(name + '_gustafson_speed_up.png')
-    output_data.save_df_data_to_json()
+    if SAVE:
+        output_data.save_data(name + '_gustafson_output.png')
+        output_data.graph_gustafson_exec_time(name + '_gustafson_exec_time.png')
+        output_data.graph_gustafson_speed_up(name + '_gustafson_speed_up.png')
+        output_data.save_df_data_to_json()
 
 
 def amdahl(model: Type[MultiplyMatricesInterface]):
@@ -30,13 +35,14 @@ def amdahl(model: Type[MultiplyMatricesInterface]):
     print(f"------------RUNNING AMDAHL------------")
     output_data = OutputData()
     matrix_dim = 300
-    for num_workers in [1, 2, 3, 4, 8, 16, 32]:
+    for num_workers in [1, 2, 3, 4, 8, 16, 32, 64, 128]:
         print(f"RUNNING WITH NUM WORKERS: {num_workers}")
         serial, parallel = run(num_workers, matrix_dim, model)
         output_data.add_data(serial, parallel, num_workers, matrix_dim)
-    output_data.save_data(name + '_amdahl_output.png')
-    output_data.graph_amdahl_speed_up(name + '_amdahl_speed_up.png')
-    output_data.save_df_data_to_json()
+    if SAVE:
+        output_data.save_data(name + '_amdahl_output.png')
+        output_data.graph_amdahl_speed_up(name + '_amdahl_speed_up.png')
+        output_data.save_df_data_to_json()
 
 
 def run(num_workers, matrix_dim, model: Type[MultiplyMatricesInterface]):
@@ -68,7 +74,13 @@ def run_model(model: Type[MultiplyMatricesInterface]):
     gustafson(model)
 
 
-OutputData.delete_all_data()
+start = time.time()
+if SAVE:
+    OutputData.delete_all_data()
 run_model(ElementByRowBlock)
 run_model(ColumnByRow)
 run_model(ByBlocks)
+end = time.time()
+print(f"**************************************")
+print(f"The process lasted {end-start} seconds")
+print(f"**************************************")
