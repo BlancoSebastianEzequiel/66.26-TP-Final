@@ -23,6 +23,8 @@ def multiply_matrices(
 
     mapped_data = mapper.map(input_data, num_workers=4)
     actual_result = mapper.reduce(mapped_data)
+    assert actual_result
+
     for elem in actual_result:
         if isinstance(elem, list):
             for value_info in elem:
