@@ -19,7 +19,7 @@ def gustafson(model: Type[MultiplyMatricesInterface]):
     print(f"------------RUNNING GUSTAFSON------------")
     output_data = OutputData()
     num_workers = 4
-    for matrix_dim in [4, 16, 64, 200, 300]:
+    for matrix_dim in [2, 4, 16, 64, 100, 200, 300]:
         print(f"RUNNING WITH MATRIX DIMENSION: {matrix_dim}")
         serial, parallel = run(num_workers, matrix_dim, model)
         output_data.add_data(serial, parallel, num_workers, matrix_dim)
@@ -35,7 +35,7 @@ def amdahl(model: Type[MultiplyMatricesInterface]):
     print(f"------------RUNNING AMDAHL------------")
     output_data = OutputData()
     matrix_dim = 100
-    for num_workers in [1, 2, 3, 4, 8, 16, 32]:
+    for num_workers in [1, 2, 3, 4, 8, 16, 32, 64, 128]:
         print(f"RUNNING WITH NUM WORKERS: {num_workers}")
         serial, parallel = run(num_workers, matrix_dim, model)
         output_data.add_data(serial, parallel, num_workers, matrix_dim)
