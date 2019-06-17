@@ -1,5 +1,4 @@
 import collections
-import itertools
 from src.controller.statistics import Statistics
 
 
@@ -28,6 +27,21 @@ class MapReduce(object):
     def get_statistics(self):
         return self.statistics
 
+    def keys_repeated(self, map_responses):
+        if not map_responses:
+            return True
+        keys = {}
+        self.statistics.start('serial')
+        for a_mapped_value in map_responses:
+            pos, values = a_mapped_value
+            if pos not in keys:
+                keys[pos] = 0
+            else:
+                self.statistics.stop('serial')
+                return True
+        self.statistics.stop('serial')
+        return False
+
     @staticmethod
     def partition(mapped_values):
         """
@@ -35,11 +49,11 @@ class MapReduce(object):
         Returns an unsorted sequence of tuples with a key and a sequence of
         values.
         """
-        mapped_values = itertools.chain(*mapped_values)
         partitioned_data = collections.defaultdict(list)
-        for key, value in mapped_values:
+        for a_mapped_value in mapped_values:
+            key, value = a_mapped_value
             partitioned_data[key].append(value)
-        return partitioned_data.items()
+        return list(partitioned_data.items())
 
     def map(self, inputs, num_workers=None):
         """
