@@ -1,4 +1,6 @@
 import collections
+import itertools
+from src.controller.utils import chunks
 from src.controller.statistics import Statistics
 
 
@@ -27,19 +29,17 @@ class MapReduce(object):
     def get_statistics(self):
         return self.statistics
 
-    def keys_repeated(self, map_responses):
-        if not map_responses:
-            return True
+    @staticmethod
+    def keys_repeated(map_responses):
+        map_responses = map_responses.copy()
+        map_responses = list(itertools.chain.from_iterable(map_responses))
         keys = {}
-        self.statistics.start('serial')
         for a_mapped_value in map_responses:
             pos, values = a_mapped_value
             if pos not in keys:
                 keys[pos] = 0
             else:
-                self.statistics.stop('serial')
                 return True
-        self.statistics.stop('serial')
         return False
 
     @staticmethod
@@ -54,6 +54,26 @@ class MapReduce(object):
             key, value = a_mapped_value
             partitioned_data[key].append(value)
         return list(partitioned_data.items())
+
+    def join_mapped_values(self, map_responses, pool, num_workers):
+        map_responses = list(itertools.chain.from_iterable(map_responses))
+        map_responses.sort(key=lambda tup: tup[0])
+        map_responses = chunks(map_responses, num_workers)
+        is_repeated = True
+        while is_repeated:
+            self.statistics.start('parallel')
+            chunksize = self.get_chunksize(map_responses, num_workers)
+            map_responses = pool.map(
+                self.partition,
+                map_responses,
+                chunksize=chunksize
+            )
+
+            self.statistics.stop('parallel')
+            self.statistics.start('serial')
+            is_repeated = self.keys_repeated(map_responses)
+            self.statistics.stop('serial')
+        return list(itertools.chain.from_iterable(map_responses))
 
     def map(self, inputs, num_workers=None):
         """

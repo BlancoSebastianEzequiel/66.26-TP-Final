@@ -1,6 +1,5 @@
 import time
 import multiprocessing
-import itertools
 from src.controller.map_reduce import MapReduce
 
 
@@ -20,17 +19,9 @@ class Pool(MapReduce):
             inputs,
             chunksize=chunksize
         )
-        data = []
-        while not self.keys_repeated(data):
-            chunksize = self.get_chunksize(map_responses, num_workers)
-            data = pool.map(
-                self.partition,
-                map_responses,
-                chunksize=chunksize
-            )
-            data = list(itertools.chain.from_iterable(data))
-        pool.close()
         self.statistics.stop('parallel')
+        data = self.join_mapped_values(map_responses, pool, num_workers)
+        pool.close()
         time.sleep(self.sleep_sec)
         return data
 
