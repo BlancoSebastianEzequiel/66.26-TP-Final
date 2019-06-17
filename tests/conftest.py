@@ -21,8 +21,8 @@ def multiply_matrices(
     div = ceil(len(matrix_a) / 2)
     input_data = model.pre_processing(matrix_a, matrix_b, row_p=div, col_p=div)
 
-    partitioned_data = mapper.map(input_data, num_workers=4)
-    actual_result = mapper.reduce(partitioned_data)
+    mapped_data = mapper.map(input_data, num_workers=4)
+    actual_result = mapper.reduce(mapped_data)
     for elem in actual_result:
         if isinstance(elem, list):
             for value_info in elem:
