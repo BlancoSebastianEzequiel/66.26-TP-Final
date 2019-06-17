@@ -1,17 +1,20 @@
-import threading
+from multiprocessing import Process, Queue
 
 
-class Thread(threading.Thread):
+class MyProcess(Process):
 
     def __init__(self, target, args):
         self.target = target
         self.args = args
-        self.output = []
+        self.output = Queue()
         super().__init__(target=target, args=args)
 
     def run(self):
         for an_arg in self.args:
-            self.output.append(self.target(an_arg))
+            self.output.put(self.target(an_arg))
 
     def get_output(self):
-        return self.output
+        output_list = []
+        while self.output.qsize() != 0:
+            output_list.append(self.output.get())
+        return output_list

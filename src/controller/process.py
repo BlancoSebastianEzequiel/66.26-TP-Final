@@ -1,6 +1,8 @@
+import itertools
+import multiprocessing as mp
 from src.controller.map_reduce import MapReduce
 from src.controller.utils import chunks
-from src.controller.my_process import Thread
+from src.controller.my_process import MyProcess
 
 
 class Process(MapReduce):
@@ -10,14 +12,14 @@ class Process(MapReduce):
         super().__init__(map_func=map_func, reduce_func=reduce_fun)
 
     def map(self, inputs, num_workers=1):
+        num_cpu = mp.cpu_count()
+        if num_workers > num_cpu:
+            num_workers = num_cpu
         splitted_data = chunks(inputs, num_workers)
-        self.statistics.start('global')
-        self.statistics.start('parallel')
         for i in range(0, num_workers):
             arg = splitted_data[i]
-            self.processes.append(Thread(target=self.map_func, args=arg))
+            self.processes.append(MyProcess(target=self.map_func, args=arg))
         map_responses = []
-        self.statistics.start('global')
         self.statistics.start('parallel')
         for process in self.processes:
             process.start()
@@ -26,6 +28,7 @@ class Process(MapReduce):
             map_responses += process.get_output()
         self.statistics.stop('parallel')
         map_responses = list(filter(lambda x: len(x) != 0, map_responses))
+        map_responses = list(itertools.chain.from_iterable(map_responses))
         return self.partition(map_responses)
 
     def reduce(self, partitioned_data, num_workers=1):
@@ -34,5 +37,4 @@ class Process(MapReduce):
         for item in partitioned_data:
             output.append(self.reduce_func(item))
         self.statistics.stop('serial')
-        self.statistics.stop('global')
         return output
