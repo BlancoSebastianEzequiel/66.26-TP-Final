@@ -1,9 +1,9 @@
 from src.controller.map_reduce import MapReduce
 from src.controller.utils import chunks
-from src.controller.thread import Thread
+from src.controller.my_process import Thread
 
 
-class Threaded(MapReduce):
+class Process(MapReduce):
 
     def __init__(self, map_func, reduce_fun):
         self.processes = []
