@@ -1,5 +1,5 @@
 import time
-import multiprocessing
+import multiprocessing as mp
 from src.controller.map_reduce import MapReduce
 
 
@@ -9,11 +9,14 @@ class Pool(MapReduce):
         super().__init__(map_func=map_func, reduce_func=reduce_fun)
         self.sleep_sec = 0.5
 
-    def map(self, inputs, num_workers=None):
+    def map(self, inputs, num_workers=1):
+        num_cpu = mp.cpu_count()
+        if num_workers > num_cpu:
+            num_workers = num_cpu
         chunksize = self.get_chunksize(inputs, num_workers)
         self.statistics.start('global')
         self.statistics.start('parallel')
-        pool = multiprocessing.Pool(processes=num_workers)
+        pool = mp.Pool(processes=num_workers)
         map_responses = pool.map(
             self.map_func,
             inputs,
@@ -27,7 +30,7 @@ class Pool(MapReduce):
 
     def reduce(self, partitioned_data, num_workers=1):
         self.statistics.start('serial')
-        pool = multiprocessing.Pool(processes=num_workers)
+        pool = mp.Pool(processes=num_workers)
         reduced_values = pool.map(self.reduce_func, partitioned_data)
         pool.close()
         self.statistics.stop('serial')
