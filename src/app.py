@@ -14,10 +14,11 @@ def gustafson(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING GUSTAFSON------------")
     output_data = OutputData()
+    num_workers = 4
     for matrix_dim in [2, 4, 8, 16, 32, 64, 100, 300]:
         print(f"RUNNING WITH MATRIX DIMENSION: {matrix_dim}")
-        serial, parallel = run(4, matrix_dim, model)
-        output_data.add_data(serial, parallel, 4, matrix_dim)
+        serial, parallel = run(num_workers, matrix_dim, model)
+        output_data.add_data(serial, parallel, num_workers, matrix_dim)
     output_data.save_data(name + '_gustafson_output.png')
     output_data.graph_gustafson_exec_time(name + '_gustafson_exec_time.png')
     output_data.graph_gustafson_speed_up(name + '_gustafson_speed_up.png')
@@ -28,10 +29,11 @@ def amdahl(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING AMDAHL------------")
     output_data = OutputData()
+    matrix_dim = 300
     for num_workers in [1, 2, 3, 4, 8, 16, 32]:
         print(f"RUNNING WITH NUM WORKERS: {num_workers}")
-        serial, parallel = run(num_workers, 10, model)
-        output_data.add_data(serial, parallel, num_workers, 500)
+        serial, parallel = run(num_workers, matrix_dim, model)
+        output_data.add_data(serial, parallel, num_workers, matrix_dim)
     output_data.save_data(name + '_amdahl_output.png')
     output_data.graph_amdahl_speed_up(name + '_amdahl_speed_up.png')
     output_data.save_df_data_to_json()
