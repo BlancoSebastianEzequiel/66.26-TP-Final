@@ -16,7 +16,6 @@ class Statistics:
 
     def start(self, key):
         self.timers[key] = time()
-        self.time_elapsed[key] = float(0)
 
     def stop(self, key):
         stop_time = time()
