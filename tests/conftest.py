@@ -9,7 +9,8 @@ from typing import Type
 def multiply_matrices(
         model: Type[MultiplyMatricesInterface],
         matrix_a,
-        matrix_b
+        matrix_b,
+        num_workers
 ):
 
     expected_result = np.matmul(matrix_a, matrix_b)
@@ -21,7 +22,7 @@ def multiply_matrices(
     div = ceil(len(matrix_a) / 2)
     input_data = model.pre_processing(matrix_a, matrix_b, row_p=div, col_p=div)
 
-    mapped_data = mapper.map(input_data, num_workers=4)
+    mapped_data = mapper.map(input_data, num_workers=num_workers)
     actual_result = mapper.reduce(mapped_data)
     assert actual_result
 
