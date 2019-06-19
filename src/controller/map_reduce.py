@@ -51,7 +51,7 @@ class MapReduce(object):
         return repeated, not_repeated
 
     @staticmethod
-    def partition(mapped_values):
+    def group_by_key(mapped_values):
         """
         Organize the mapped values by their key.
         Returns an unsorted sequence of tuples with a key and a sequence of
@@ -63,42 +63,39 @@ class MapReduce(object):
             partitioned_data[key].append(value)
         return list(partitioned_data.items())
 
-    def shuffle(self, map_responses, num_workers):
-        self.statistics.start('serial')
+    @staticmethod
+    def shuffle(map_responses, num_workers):
         map_responses = list(filter(lambda x: len(x) != 0, map_responses))
         map_responses = list(itertools.chain.from_iterable(map_responses))
         map_responses.sort(key=lambda tup: tup[0])
-        self.statistics.stop('serial')
         map_responses = chunks(map_responses, num_workers)
         map_responses = list(filter(lambda x: len(x) != 0, map_responses))
         return map_responses
 
-    def join_mapped_values(self, map_responses, num_workers):
+    def group_by_key_mapped_values(self, map_responses, num_workers):
         is_repeated = True
-        i = 0
         output = []
         while is_repeated:
+            self.statistics.start('serial')
             num_workers = ceil(num_workers/2)
             map_responses = self.shuffle(map_responses, num_workers)
-            self.statistics.start('parallel')
             chunksize = self.get_chunksize(map_responses, num_workers)
+            self.statistics.stop('serial')
             pool = mp.Pool(processes=num_workers)
+            self.statistics.start('parallel')
             map_responses = pool.map(
-                self.partition,
+                self.group_by_key,
                 map_responses,
                 chunksize=chunksize
             )
-            pool.close()
             self.statistics.stop('parallel')
+            pool.close()
             self.statistics.start('serial')
             repeated, not_repeated = self.keys_repeated(map_responses)
             output += not_repeated
             map_responses = repeated
-            is_repeated = len(repeated) == 0
+            is_repeated = len(repeated) != 0
             self.statistics.stop('serial')
-            i += 1
-            if i == 2:
-                is_repeated = False
         return output
 
     def map(self, inputs, num_workers=None):
