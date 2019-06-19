@@ -23,7 +23,7 @@ class Pool(MapReduce):
             chunksize=chunksize
         )
         self.statistics.stop('parallel')
-        data = self.join_mapped_values(map_responses, pool, num_workers)
+        data = self.join_mapped_values(map_responses, num_workers)
         pool.close()
         time.sleep(self.sleep_sec)
         return data
