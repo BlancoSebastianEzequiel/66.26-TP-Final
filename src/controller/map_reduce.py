@@ -1,5 +1,7 @@
 import collections
 import itertools
+import multiprocessing as mp
+from math import ceil
 from src.controller.utils import chunks
 from src.controller.statistics import Statistics
 
@@ -71,19 +73,22 @@ class MapReduce(object):
         map_responses = list(filter(lambda x: len(x) != 0, map_responses))
         return map_responses
 
-    def join_mapped_values(self, map_responses, pool, num_workers):
+    def join_mapped_values(self, map_responses, num_workers):
         is_repeated = True
         i = 0
         output = []
         while is_repeated:
+            num_workers = ceil(num_workers/2)
             map_responses = self.shuffle(map_responses, num_workers)
             self.statistics.start('parallel')
             chunksize = self.get_chunksize(map_responses, num_workers)
+            pool = mp.Pool(processes=num_workers)
             map_responses = pool.map(
                 self.partition,
                 map_responses,
                 chunksize=chunksize
             )
+            pool.close()
             self.statistics.stop('parallel')
             self.statistics.start('serial')
             repeated, not_repeated = self.keys_repeated(map_responses)
