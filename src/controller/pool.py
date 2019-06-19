@@ -14,26 +14,24 @@ class Pool(MapReduce):
         if num_workers > num_cpu:
             num_workers = num_cpu
         chunksize = self.get_chunksize(inputs, num_workers)
-        self.statistics.start('global')
-        self.statistics.start('parallel')
         pool = mp.Pool(processes=num_workers)
+        self.statistics.start('parallel')
         map_responses = pool.map(
             self.map_func,
             inputs,
             chunksize=chunksize
         )
         self.statistics.stop('parallel')
-        data = self.join_mapped_values(map_responses, num_workers)
+        data = self.group_by_key_mapped_values(map_responses, num_workers)
         pool.close()
         time.sleep(self.sleep_sec)
         return data
 
     def reduce(self, partitioned_data, num_workers=1):
-        self.statistics.start('serial')
         pool = mp.Pool(processes=num_workers)
+        self.statistics.start('serial')
         reduced_values = pool.map(self.reduce_func, partitioned_data)
-        pool.close()
         self.statistics.stop('serial')
+        pool.close()
         time.sleep(self.sleep_sec)
-        self.statistics.stop('global')
         return reduced_values

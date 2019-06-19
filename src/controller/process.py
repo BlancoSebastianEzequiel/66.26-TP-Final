@@ -29,7 +29,7 @@ class Process(MapReduce):
         self.statistics.stop('parallel')
         map_responses = list(filter(lambda x: len(x) != 0, map_responses))
         map_responses = list(itertools.chain.from_iterable(map_responses))
-        return self.partition(map_responses)
+        return self.group_by_key(map_responses)
 
     def reduce(self, partitioned_data, num_workers=1):
         output = []
