@@ -16,16 +16,18 @@
     Entonces lo que hicimos fue instanciar dos \code{pool}, uno para hacer el map y
     el otro para el reduce de manera que el primero se le pasa como atributo la
     cantidad de worker en el cual se quiere paralelizar el problema y el segundo
-    solo se usa uno de manera tal que la fase de reduce se la serie.
+    solo se usa uno de manera tal que la fase de reduce sea la serie.
 
 \subsection{Multiplicacion de matrices por bloques}
 
     \paragraph{Preprocesamiento}
 
-        Generamos una lista de tuplas donde cada una tiene la posicion
-        \code{(r, c)} de un bloque de la matriz A, tiene el bloque en
-        custion \code{a\_block\_rc}, y la fila numero \code{c} de bloques de la
-        matriz B, quedando con este formato: \\
+        Sean dos matrices \code{A} de \code{NxN} y \code{B} de \code{NxN} las
+        dividimos en \code{(N/2)x(N/2)} bloques cada una. Luego generamos una
+        lista de tuplas donde cada una tiene la posicion \code{(r, c)} de un bloque
+        de la matriz \code{A}, tiene el bloque en custion \code{a\_block\_rc},
+        y la fila numero \code{c} de bloques de la matriz \code{B}, quedando
+        con este formato: \\
         \code{(r, c, a\_block\_rc, b\_block\_c)}
 
     \paragraph{Mapeo}
@@ -53,10 +55,13 @@
 
     \paragraph{Preprocesamiento}
 
-        Consiste en generar una lista de tuplas a partir de las dos matrices.
-        Se itera por cada elemento (\code{a\_ij}) de la matriz A y se guarda
-        en cada tupla el numero de fila del elemento \code{a\_ij}, el
-        elemento \code{a\_ij} y la fila \code{j} de la matriz B.\\
+        Sean dos matrices \code{A} de \code{NxN} y \code{B} de \code{NxN}
+        generamos una lista de tuplas a partir de las dos matrices.
+        Se itera por cada elemento (\code{a\_ij}) de la matriz \code{A} y se
+        guarda en cada tupla el numero de fila \code{i} del elemento
+        \code{a\_ij}, el elemento \code{a\_ij} y la fila \code{j} de la
+        matriz \code{B}. Quedando cada tupla de la siguiente manera:\\
+        \code{(i, a\_ij, B[j])}
 
     \paragraph{Mapeo}
 
@@ -77,15 +82,18 @@
 
     \paragraph{Preprocesamiento}
 
-        Consiste en generar una lista de tuplas a partir de las dos matrices.
-        Se guarda en cada tupla la columna \code{i} de la matriz A y la fila
-        \code{i} de la matriz B
+        Sean dos matrices \code{A} de \code{NxN} y \code{B} de \code{NxN}
+        generamos una lista de tuplas a partir de las dos matrices.
+        Se guarda en cada tupla la columna \code{i} de la matriz \code{A} y
+        la fila \code{i} de la matriz \code{B}. Quedando cada tupla de la
+        siguiente manera:\\
+        \code{(A[:][i], B[i])}
 
     \paragraph{Mapeo}
         Recibimos una columna de la matriz A y una fila de la matriz B y por cada
         elemento de la columna \code{elem\_a} lo multiplicamos por cada elemento
         de la fila \code{elem\_b} obteniendo una matriz parcial de la
-        multiplicacion. por cada multiplicacion guardamos en un vector una tupla
+        multiplicacion. Por cada multiplicacion guardamos en un vector una tupla
         con un par clave valor donde la clave es la posicion de salida de la matriz
         resultante y el valor es la multiplicacion anteriormente mencionada.
         Finalmente se devuelve el vector de tuplas.

@@ -61,15 +61,12 @@ cantidad de procesadores podemos calcular el speed up como:
 
 MapReduce es una técnica de procesamiento y un programa modelo de computación
 distribuida. El algoritmo MapReduce contiene dos tareas importantes.\\\\
-Map toma un conjunto de datos y se convierte en otro conjunto de datos, en el
+\code{Map} toma un conjunto de datos y se convierte en otro conjunto de datos, en el
 que los elementos se dividen en tuplas (pares: clave, valor).\\
-
-Reduce toma la salida de un mapa como entrada y combina los datos tuplas en un
+\code{Reduce} toma la salida de un mapa como entrada y combina los datos tuplas en un
 conjunto más pequeño de tuplas.\\
-
 La principal ventaja de MapReduce es que es fácil de escalar procesamiento de
 datos en múltiples nodos.\\
-
 De acuerdo a este modelo, basado en la programación funcional, la tarea del
 usuario consiste en la definición de una función map y una función reduce y
 definidas estas funciones, el procesamiento es fácilmente paralelizable, ya sea
