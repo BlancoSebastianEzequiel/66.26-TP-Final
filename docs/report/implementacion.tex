@@ -107,12 +107,13 @@
 
 
 \subsection{Forma de ejecucion}
-    Para el caso de Amdahl multiplicamos dos matrices de \code{10x10}
-    con \code{1}, \code{2}, \code{4}, \code{8}, \code{16} y \code{32} threads.\\
+    Para el caso de Amdahl multiplicamos dos matrices de \code{100x100}
+    con \code{1}, \code{2}, \code{3}, \code{4}, \code{8}, \code{16}, \code{32},
+    \code{64} y \code{128} threads.\\
 
     Para el caso de gustafson se usan siempre 4 threads multiplicando dos matrices
-    de \code{2x2}, \code{4x4}, \code{8x8}, \code{16x16}, \code{32x32} y
-    \code{64x64}\\
+    de \code{2x2}, \code{4x4}, \code{16x16}, \code{64x365}, \code{100x100},
+    \code{200x200}, y \code{300x300}.\\
 
     Para realizar el calculo se debe ejecutar: \\
     \lstinline[columns=fixed]{$ sh scripts/run.sh}.\\
@@ -120,6 +121,12 @@
     Luego para generar los graficos que vemos en el informe se debe
     ejecutar: \\
     \lstinline[columns=fixed]{$ sh scripts/generate_output_data.sh}
+
+    Y finalmente para generar el informe debemos ejecutar: \\
+    \lstinline[columns=fixed]{$ sh scripts/make_report.sh}
+
+    Tambien hay un script que corre estos tres comandos en un solo script:\\
+    \lstinline[columns=fixed]{$ sh scripts/run_all.sh}
 
 \subsection{Datos sobre la computadora que se utilizó}
     El equipo sobre el que se realizarán las mediciones es una laptop con un
