@@ -1,4 +1,5 @@
 import time
+import os
 from typing import Type
 from math import ceil
 # from src.controller.threaded import Threaded as MapReduce
@@ -9,15 +10,17 @@ from src.model.column_by_row import ColumnByRow
 from src.model.by_blocks import ByBlocks
 from src.model.multiply_matrices_interface import MultiplyMatricesInterface
 from src.controller.generate_output_data import OutputData
+from src.controller.utils import get_version_number
 
 
 SAVE = True
+VERSION = get_version_number()
 
 
 def gustafson(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING GUSTAFSON------------")
-    output_data = OutputData()
+    output_data = OutputData(version=VERSION)
     num_workers = 4
     for matrix_dim in [2, 4, 16, 64, 100, 200, 300]:
         print(f"RUNNING WITH MATRIX DIMENSION: {matrix_dim}")
@@ -33,7 +36,7 @@ def gustafson(model: Type[MultiplyMatricesInterface]):
 def amdahl(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING AMDAHL------------")
-    output_data = OutputData()
+    output_data = OutputData(version=VERSION)
     matrix_dim = 100
     for num_workers in [1, 2, 3, 4, 8, 16, 32, 64, 128]:
         print(f"RUNNING WITH NUM WORKERS: {num_workers}")
@@ -75,8 +78,6 @@ def run_model(model: Type[MultiplyMatricesInterface]):
 
 
 start = time.time()
-if SAVE:
-    OutputData.delete_all_data()
 run_model(ElementByRowBlock)
 run_model(ColumnByRow)
 run_model(ByBlocks)
