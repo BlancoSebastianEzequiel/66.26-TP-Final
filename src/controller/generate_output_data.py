@@ -7,7 +7,7 @@ from src.controller.utils import get_null_list_of_dim_n
 
 
 class OutputData:
-    def __init__(self):
+    def __init__(self, version=1):
         self.data = {
             'number_of_threads': [],
             'parallel_time': [],
@@ -16,8 +16,14 @@ class OutputData:
         }
         self._colors = ['b-', 'g-', 'r-', 'c-', 'm-', 'y-', 'k-', 'w-']
         self.dfs_data = []
-        self.pics_path = './docs/report/pics/'
-        self.files_path = './src/data/'
+        pics_path = f"./docs/report/pics/graphs_v{version}/"
+        if not os.path.isdir(pics_path):
+            os.system(f'mkdir {pics_path}')
+        self.pics_path = pics_path
+        files_path = f"./src/data/data_v{version}/"
+        if not os.path.isdir(files_path):
+            os.system(f'mkdir {files_path}')
+        self.files_path = files_path
 
     def add_data(self, serial, parallel, num_workers, matrix_dimension):
         self.data['number_of_threads'].append(num_workers)
@@ -132,17 +138,17 @@ class OutputData:
 
     @classmethod
     def delete_all_data(cls):
-        os.system('rm -rf src/data/*')
+        os.system('rm  src/data/*')
 
     def save_df_data_to_json(self):
-        path = 'src/data/data.json'
+        path = f'{self.files_path}data.json'
         data = []
         if self.file_exists(path):
-            with open('src/data/data.json', encoding='utf-8-sig') as json_file:
+            with open(path, encoding='utf-8-sig') as json_file:
                 text = json_file.read()
                 if text:
                     data = json.loads(text)
-        with open('src/data/data.json', 'w') as f:
+        with open(path, 'w') as f:
             json.dump(self.dfs_data+data, f)
 
     def save_df_data(self, df, y_axis, x_axis, colors, graph_name, has_graph):
@@ -158,7 +164,8 @@ class OutputData:
         })
 
     def read_dfs_data_from_json(self):
-        with open('src/data/data.json', encoding='utf-8-sig') as json_file:
+        data_path = f"{self.files_path}data.json"
+        with open(data_path, encoding='utf-8-sig') as json_file:
             text = json_file.read()
             self.dfs_data = json.loads(text)
 
