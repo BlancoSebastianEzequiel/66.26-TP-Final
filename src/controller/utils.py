@@ -1,4 +1,5 @@
 import numpy as np
+import os
 from math import ceil
 
 
@@ -94,3 +95,11 @@ def chunks(a_list, num):
         out.append(a_list[int(last):int(last + avg)])
         last += avg
     return out
+
+
+def get_version_number():
+    folders = 0
+    for _, dir_names, _ in os.walk('docs/report/pics/'):
+        folders += len(dir_names)
+    return folders
+
