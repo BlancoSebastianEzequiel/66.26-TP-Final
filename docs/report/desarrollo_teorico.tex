@@ -8,11 +8,11 @@ puede usar más generalmente para mostrar el efecto en el rendimiento después d
 cualquier mejora en los recursos.\\
 De forma genérica se define como:
 \begin{equation}
-    speed\_up = \dfrac{Rendimiento\_con\_mejora}{Rendimiento\_sin\_mejora}
+    \textbf{speed\_up} = \dfrac{Rendimiento\_con\_mejora}{Rendimiento\_sin\_mejora}
 \end{equation}
 En el caso de mejoras aplicadas a los tiempo de ejecución de una tarea:
 \begin{equation}
-    speed\_up = \dfrac{T\_ejecucion\_sin\_mejora}{T\_ejecucion\_con\_mejora}
+    \textbf{speed\_up} = \dfrac{T\_ejecucion\_sin\_mejora}{T\_ejecucion\_con\_mejora}
 \end{equation}
 
 \subsection{Ley de Amdahl}
@@ -27,7 +27,7 @@ Suponiendo que nuestro algoritmo se divide en una parte secuencial \code{s}
 u una parte paralelizable \code{p} y siendo \code{N} la cantidad de threads,
 entonces podemos decir que:
 \begin{equation}
-    speed\_up = \dfrac{s+p}{s+\dfrac{p}{N}}
+    \textbf{speed\_up} = \dfrac{s+p}{s+\dfrac{p}{N}}
 \end{equation}
 
 Amdahl establece un límite superior al speedup que puede obtenerse al
@@ -36,7 +36,7 @@ determinado por la porción de la tarea sobre la que se aplique la mejora.
 Entonces si tomamos la ecuacion anterior y calculamos el limite de la misma con
 \code{N} tendiendo a infinito tenemos:
 \begin{equation}
-    speed\_up\_max = 1 + \dfrac{p}{s}
+    \textbf{speed\_up\_max} = 1 + \dfrac{p}{s}
 \end{equation}
 \newpage
 
@@ -54,7 +54,7 @@ Entonces siendo \code{s} el tiempo de la ejecucucion de la seccion serie, siendo
 \code{p} el tiempo de la ejecucion de la seccion paralela y siendo \code{N} la
 cantidad de procesadores podemos calcular el speed up como:
 \begin{equation}
-    speed\_up = \dfrac{s+p*N}{s+p}
+    \textbf{speed\_up} = \dfrac{s+p*N}{s+p}
 \end{equation}
 
 \subsection{Map-reduce}
