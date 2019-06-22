@@ -1,24 +1,65 @@
 \subsection{Multiplicacion por bloques}
 
     \def\model{ByBlocks}
-    \def\analisisAmdahl{Podemos observar que}
-    \def\analisisGustafson{Podemos ver que}
+    \def\analisisAmdahl{
+    Podemos observar que el speed up teorico tiende al
+    maximo speed up mientras que el real encuentra un maximo luego de los 4
+    thread aproximadamente ya que la cantidad maxima de core de la computadora
+    donde se corrio el programa es de 4
+    }
+    \def\analisisGustafson{
+    Podemos ver que estos resultados demuestran que la sección serie del
+    problema se mantiene casi constante respecto de la sección paralela
+    que varía en forma ascendente con el tamaño de los datos de entrada.
+    Así, la fracción secuencial representa menos al tiempo total en la medida
+    que la carga de trabajo aumenta
+    }
     \input{report/resultados_template.tex}
     \newpage
+    \clearpage
 
 \subsection{Multiplicacion elemento por fila}
 
     \def\model{ElementByRowBlock}
-    \def\analisisAmdahl{Podemos observar que}
-    \def\analisisGustafson{Podemos ver que}
+    \def\analisisAmdahl{
+    Podemos observar que el speed up teorico tiende al
+    maximo speed up mientras que el real encuentra un maximo luego de los 4
+    thread aproximadamente ya que la cantidad maxima de core de la computadora
+    donde se corrio el programa es de 4
+    }
+    \def\analisisGustafson{
+    Podemos ver que estos resultados demuestran que la sección serie del
+    problema se mantiene casi constante respecto de la sección paralela
+    que varía en forma ascendente con el tamaño de los datos de entrada.
+    Así, la fracción secuencial representa menos al tiempo total en la medida
+    que la carga de trabajo aumenta
+    }
     \input{report/resultados_template.tex}
     \newpage
+    \clearpage
 
 \subsection{Multiplicacion columna por fila}
 
     \def\model{ColumnByRow}
-    \def\analisisAmdahl{Podemos observar que}
-    \def\analisisGustafson{Podemos ver que}
+    \def\analisisAmdahl{
+    Podemos observar que el speed up teorico tiende al
+    maximo speed up mientras que el real empieza a tender a un maximo menor
+    debido a que la cantidad maxima de core de la computadora donde se corrio
+    el programa es de 4. Pero podemos ver tambien que hubo variaciones y que el
+    speed up real tuvo anomalias y tendencias a crecer a pesar de el maximo de
+    cores reales. Esto se debe a que al aumentar la cantidad de thread, la
+    seccion serie del problema no se mantuvo constante si no que tuve ciertas
+    variaciones equilibrando la caida de perfonmance de la seccion paralela.
+    Esta variacion en el tiempo de la parte serie se debe a la forma en que
+    quedan organizados los datos una vez procesados por los map workers
+    }
+    \def\analisisGustafson{
+    Podemos ver que estos resultados demuestran que la sección serie del
+    problema se mantiene casi constante respecto de la sección paralela
+    que varía en forma ascendente con el tamaño de los datos de entrada.
+    Así, la fracción secuencial representa menos al tiempo total en la medida
+    que la carga de trabajo aumenta
+    }
     \input{report/resultados_template.tex}
     \newpage
     \clearpage
