@@ -107,24 +107,28 @@
 
 
 \subsection{Forma de ejecucion}
-    Para el caso de Amdahl multiplicamos dos matrices de \code{100x100}
-    con \code{1}, \code{2}, \code{3}, \code{4}, \code{8}, \code{16}, \code{32},
-    \code{64} y \code{128} threads.\\
+    Para el caso de Amdahl multiplicamos dos matrices de \code{100x100} y cada
+    una de estas multiplicaciones la realizamos para \code{1}, \code{2},
+    \code{3}, \code{4}, \code{8}, \code{16}, \code{32}, \code{64} y \code{128}
+    threads.\\
 
     Para el caso de gustafson se usan siempre 4 threads multiplicando dos matrices
-    de \code{2x2}, \code{4x4}, \code{16x16}, \code{64x365}, \code{100x100},
+    de \code{2x2}, \code{4x4}, \code{16x16}, \code{64x64}, \code{100x100},
     \code{200x200}, y \code{300x300}.\\
 
     Para realizar el calculo se debe ejecutar: \\
-    \lstinline[columns=fixed]{$ sh scripts/run.sh}.\\
+    \lstinline[columns=fixed]{$ sh scripts/run.sh}.
 
+    \hfill \break
     Luego para generar los graficos que vemos en el informe se debe
     ejecutar: \\
     \lstinline[columns=fixed]{$ sh scripts/generate_output_data.sh}
 
+    \hfill \break
     Y finalmente para generar el informe debemos ejecutar: \\
     \lstinline[columns=fixed]{$ sh scripts/make_report.sh}
 
+    \hfill \break
     Tambien hay un script que corre estos tres comandos en un solo script:\\
     \lstinline[columns=fixed]{$ sh scripts/run_all.sh}
 
