@@ -3,7 +3,8 @@
 void init_arr(double m, double n, double off, double* a) {
     int i;
     for (i = 0; i < (m*n); i++) {
-        a[i] = (i + 1) * off;
+        // a[i] = (i + 1) * off;
+        a[i] = (i % 10) * off;
     }
 }
 void print_arr(char *name, int m, int n, double *array) {
@@ -15,20 +16,6 @@ void print_arr(char *name, int m, int n, double *array) {
         }
         printf("\n");
     }
-}
-
-int alloc_matrix(double **matrix, int m, int n) {
-    *matrix = (double *) malloc(m * n * sizeof(double));
-    if (*matrix == NULL) {
-        printf("\n ERROR: Can't allocate memory for matrices. Aborting... \n\n");
-        free(*matrix);
-        return 1;
-    }
-    return 0;
-}
-
-void free_matrix(double **matrix) {
-    free(*matrix);
 }
 
 void multiply_matrices(const double *a, const double *b, double *c, int n) {
@@ -52,4 +39,8 @@ bool matrix_compare(const double *a, const double *b, int n) {
         }
     }
     return true;
+}
+
+int double_to_string(char* buffer, double num, int max_bytes) {
+    return snprintf(buffer, max_bytes, "%lf", num);
 }
