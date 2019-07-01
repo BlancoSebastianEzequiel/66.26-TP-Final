@@ -26,7 +26,7 @@ void test_cblas_dgemm() {
     // print_arr("expected", N, N, expected_result);
 }
 void test_blocked_dgemm_sse() {
-    int N = 500;
+    int N = 400;
     double A[N*N];
     double B[N*N];
     double C[N*N];
