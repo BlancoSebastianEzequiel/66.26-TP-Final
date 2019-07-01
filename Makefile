@@ -72,11 +72,17 @@ compile_code:
 run_code:
 	./app
 
+run_valgrind_code:
+	valgrind --show-leak-kinds=all --leak-check=full ./app
+
 compile_test:
 	$(LD) $(test_sources) -o test $(LDFLAGS)
 
 run_test:
 	./test
+
+run_valgrind_test:
+	valgrind --show-leak-kinds=all --leak-check=full ./test
 
 clean:
 	$(RM) -f app test
