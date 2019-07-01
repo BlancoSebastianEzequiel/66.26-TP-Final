@@ -7,7 +7,7 @@ from src.controller.utils import get_null_list_of_dim_n
 
 
 class OutputData:
-    def __init__(self, version=1):
+    def __init__(self, version=1, avoid=False):
         self.data = {
             'number_of_threads': [],
             'parallel_time': [],
@@ -17,11 +17,11 @@ class OutputData:
         self._colors = ['b-', 'g-', 'r-', 'c-', 'm-', 'y-', 'k-', 'w-']
         self.dfs_data = []
         pics_path = f"./docs/report/pics/graphs_v{version}/"
-        if not os.path.isdir(pics_path):
+        if not os.path.isdir(pics_path) and avoid:
             os.system(f'mkdir {pics_path}')
         self.pics_path = pics_path
         files_path = f"./src/data/data_v{version}/"
-        if not os.path.isdir(files_path):
+        if not os.path.isdir(files_path) and avoid:
             os.system(f'mkdir {files_path}')
         self.files_path = files_path
 
@@ -57,6 +57,9 @@ class OutputData:
     def df_to_csv(self, df, df_name):
         path = self.files_path + df_name
         df.to_csv(path, index=False, sep=',', encoding='utf-8-sig')
+
+    def get_df_from_csv(self, filepath):
+        return pd.read_csv(filepath, low_memory=False, sep=',')
 
     def graph_amdahl_speed_up(self, filename):
         df = pd.DataFrame(data=self.data)
