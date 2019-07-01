@@ -110,14 +110,20 @@
     Para el caso de Amdahl multiplicamos dos matrices de \code{100x100} y cada
     una de estas multiplicaciones la realizamos para \code{1}, \code{2},
     \code{3}, \code{4}, \code{8}, \code{16}, \code{32}, \code{64} y \code{128}
-    threads.\\
+    threads.
 
+    \hfill \break
     Para el caso de gustafson se usan siempre 4 threads multiplicando dos matrices
     de \code{2x2}, \code{4x4}, \code{16x16}, \code{64x64}, \code{100x100},
-    \code{200x200}, y \code{300x300}.\\
+    \code{200x200}, y \code{300x300}.
 
+    \hfill \break
     Luego para el caso de \code{cblas} y de instrucciones vectoriales (MMX)
-    se usa un thread multiplicando dos matrices de \code{400x400}\\
+    se usa un thread multiplicando dos matrices de \code{400x400}
+
+    \hfill \break
+    Para poder probar este trabajo se debe clonar el repositorio (el link esta
+    en la caratula) y abrir una terminal en el \code{root} del mismo.
 
     \hfill \break
     Para compilar \code{cblas} y las instrucciones vectoriales que estan en
@@ -130,7 +136,7 @@
     \lstinline[columns=fixed]{$ ./app}.
 
     \hfill \break
-    Para realizar el calculo se debe ejecutar: \\
+    Para realizar el calculo de map-reduce se debe ejecutar: \\
     \lstinline[columns=fixed]{$ sh scripts/run.sh}.
 
     \hfill \break
@@ -143,7 +149,7 @@
     \lstinline[columns=fixed]{$ sh scripts/make_report.sh}
 
     \hfill \break
-    Tambien hay un script que corre estos tres comandos en un solo script:\\
+    Tambien hay un script que corre estos ultimos tres comandos en un solo script:\\
     \lstinline[columns=fixed]{$ sh scripts/run_all.sh}
 
 \subsection{Datos sobre la computadora que se utilizó}
