@@ -77,3 +77,43 @@ De acuerdo a este modelo, basado en la programación funcional, la tarea del
 usuario consiste en la definición de una función map y una función reduce y
 definidas estas funciones, el procesamiento es fácilmente paralelizable, ya sea
 en una sola máquina o en un cluster.\\
+
+\subsection{LAPACK}
+    LAPACK está escrito en Fortran 90 y proporciona rutinas para resolver
+    sistemas de ecuaciones lineales simultáneas, soluciones de mínimos
+    cuadrados de sistemas de ecuaciones lineales, problemas de valores propios y
+    problemas de valores singulares. También se proporcionan las factorizaciones
+    matriciales asociadas (LU, Cholesky, QR, SVD, Schur, Schur generalizado),
+    al igual que los cálculos relacionados, tales como la reordenación de las
+    factorizaciones de Schur y la estimación de los números de condición. Se
+    manejan matrices densas y con bandas, pero no matrices dispersas generales.
+    En todas las áreas, se proporciona una funcionalidad similar para matrices
+    reales y complejas, con precisión simple y doble.
+
+\subsection{ScaLAPACK}
+    Es una liberia de rutinas de álgebra lineal de alto rendimiento para máquinas
+    de memoria distribuida en paralelo. ScaLAPACK resuelve sistemas lineales
+    densos y en bandas, problemas de mínimos cuadrados, problemas de valores
+    propios y problemas de valores singulares. Las ideas clave incorporadas en
+    ScaLAPACK incluyen el uso de:
+    \begin{itemize}
+        \item Una distribución de datos de bloques cíclicos para matrices densas
+        y una distribución de datos de bloques para matrices en bandas,
+        parametrizable en tiempo de ejecución.
+        \item Algoritmos de partición de bloque para asegurar altos niveles de
+        reutilización de datos.
+        \item Componentes modulares de bajo nivel bien diseñados que simplifican
+        la tarea de paralelizar las rutinas de alto nivel haciendo que su código
+        fuente sea el mismo que en el caso secuencial.
+    \end{itemize}
+
+\subsection{CBLAS}
+    BLAS (Subprogramas de Álgebra Lineal Básica) son rutinas que proporcionan
+    bloques de construcción estándar para realizar operaciones básicas de
+    vectores y matrices. Las BLAS de nivel 1 realizan operaciones escalares,
+    vectoriales y vectoriales, las BLAS de nivel 2 realizan operaciones de
+    vectores matriciales y las BLAS de nivel 3 realizan operaciones
+    de matriz-matriz. Debido a que los BLAS son eficientes, portátiles y
+    ampliamente disponibles, se usan comúnmente en el desarrollo de software
+    de álgebra lineal de alta calidad, LAPACK, por ejemplo.\\
+    CBLAS es una interfaz de lenguaje C para BLAS.
