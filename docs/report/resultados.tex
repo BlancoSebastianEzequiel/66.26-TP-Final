@@ -63,3 +63,22 @@
     \input{report/resultados_template.tex}
     \newpage
     \clearpage
+
+\subsection{Cblas e instrucciones vectorizadas}
+    \def\text{Tiempo serie de multiplicacion en segundos}
+    \def\path{\versiondir/dgemm.png}
+    \def\scale{.6}
+    \input{report/image.tex}
+
+    Podemos decir que en general, las corridas con mapReduce, en el caso donde se
+    uso un solo thread, si sumamos el tiempo paralelo y serie (que es todo serie
+    ya que se usa un solo thread) nos da en promedio de los tres tipos de
+    multiplicacion tardaron alrededor de 3 segundos. En cambio podemos ver que
+    usando \code{cblas} tenemos un tiempo de 0.03 segundos y usando las
+    instrucciones vectorizadas 0.36 segundos.\\
+    De esta manera vemos que \code{cblas} y las instrucciones vectorizadas aprovechan
+    mucho mejor el hardware para la realizacion de la misma operacion. Tambien es
+    cierto que el map reduce hace uso de un modulo de \code{python} llamado
+    \code{pool} que puede ser que sume latencia al momento de dividir el trabajo,
+    pero cuando aumentamos mucho el volumen del trabajo se ve en los graficos que
+    se aprovecha mejor la paralelizacion.
