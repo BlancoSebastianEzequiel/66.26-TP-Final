@@ -104,6 +104,74 @@
         multiplicaciones parciales. Entonces se suman estas y se devuelve la
         posicion de salida y la suma.
 
+\subsection{MMX}
+    Se escribio un codigo en \code{c} donde se multiplicaban dos matrices
+    por bloques. al momento de hacer la multiplicacion parcial de elementos donde
+    cada elemento es un bloque de la matriz se usa una intruccion llamada
+    \code{\#pragma vector always} para decirle al  compilador que la siguiente
+    fraccion de codigo sera vectoriada.\\
+    Este codigo fue dessarrollado en el archivo \code{blocked\_dgemm\_sse.c} que
+    se encuentra en el anexo.
+
+\subsection{Bblas}
+    Se uso una funcion de la libreria \code{cblas.h} de \code{c}. Esta funcion
+    cuya firma es:
+    \lstset{language=C, numbers=left, tabsize=2, escapeinside=||}
+    \begin{lstlisting}
+    void cblas_dgemm(
+            CBLAS_LAYOUT layout,
+            CBLAS_TRANSPOSE TransA,
+            CBLAS_TRANSPOSE TransB,
+            const int M, const int N,
+            const int K,
+            const double alpha,
+            const double *A,
+            const int lda,
+            const double *B,
+            const int ldb,
+            const double beta,
+            double *C,
+            const int ldc);
+    \end{lstlisting}
+    Esta llamada a la rutina \code{cblas\_dgemm} multiplica dos matrices:
+    \begin{lstlisting}
+        cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, k, B, n, beta, C, n);
+    \end{lstlisting}
+    Los argumentos proporcionan opciones sobre cómo Intel MKL realiza la
+    operación. En este caso: \\
+    \begin{itemize}
+        \item \underline{\textbf{CblasRowMajor:}} Indica que las matrices se
+        almacenan en el orden mayor de la fila, con los elementos de cada fila
+        de la matriz almacenados de forma contigua.
+        \item \underline{\textbf{CblasNoTrans:}} Tipo de enumeración que indica
+        que las matrices A y B no deben ser transpuestas o conjugadas antes de
+        la multiplicación.
+        \item \underline{\textbf{m, n, k:}} Enteros que indican el tamaño de
+        las matrices:
+        \begin{itemize}
+            \item \underline{\textbf{A:}} m filas por k columnas
+            \item \underline{\textbf{B:}} k filas por n columnas
+            \item \underline{\textbf{C:}} m filas por n columnas
+        \end{itemize}
+        \item \underline{\textbf{alpha:}} Valor real utilizado para escalar el
+        producto de las matrices A y B.
+        \item \underline{\textbf{A:}} Arreglo utilizado para almacenar la matriz A.
+        \item \underline{\textbf{k:}} Dimensión inicial de la matriz A, o el
+        número de elementos entre filas sucesivas (para el almacenamiento
+        principal de fila) en la memoria. En el caso de este ejercicio,
+        la dimensión principal es la misma que la cantidad de columnas.
+        \item \underline{\textbf{B:}} Arreglo utilizado para almacenar la matriz B.
+        \item \underline{\textbf{n:}} Dimensión inicial de la matriz B, o el
+        número de elementos entre filas sucesivas (para el almacenamiento
+        principal de fila) en la memoria. En el caso de este ejercicio, la
+        dimensión principal es la misma que la cantidad de columnas.
+        \item \underline{\textbf{beta:}}
+        \item \underline{\textbf{C:}} Arreglo utilizado para almacenar la matriz C.
+        \item \underline{\textbf{n:}} Dimensión inicial de la matriz C, o el
+        número de elementos entre filas sucesivas (para el almacenamiento
+        principal de fila) en la memoria. En el caso de este ejercicio, la
+        dimensión principal es la misma que la cantidad de columnas.
+    \end{itemize}
 
 
 \subsection{Forma de ejecucion}

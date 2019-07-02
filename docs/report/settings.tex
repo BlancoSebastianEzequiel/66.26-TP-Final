@@ -58,3 +58,14 @@
 \definecolor{light-gray}{gray}{0.95}
 \newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
 
+%-------------------------------------------------------------------------------
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+%-------------------------------------------------------------------------------
+% How to add a forced line break inside a table cell
+% https://tex.stackexchange.com/questions/2441/how-to-add-a-forced-line-break-inside-a-table-cell
+%-------------------------------------------------------------------------------
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
