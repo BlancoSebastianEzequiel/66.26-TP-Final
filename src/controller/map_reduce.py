@@ -57,6 +57,7 @@ class MapReduce(object):
         Returns an unsorted sequence of tuples with a key and a sequence of
         values.
         """
+        mapped_values = list(itertools.chain.from_iterable(mapped_values))
         partitioned_data = collections.defaultdict(list)
         for a_mapped_value in mapped_values:
             key, value = a_mapped_value
@@ -76,26 +77,26 @@ class MapReduce(object):
         is_repeated = True
         output = []
         while is_repeated:
-            self.statistics.start('serial')
+            # self.statistics.start('serial')
             num_workers = ceil(num_workers/2)
             map_responses = self.shuffle(map_responses, num_workers)
             chunksize = self.get_chunksize(map_responses, num_workers)
-            self.statistics.stop('serial')
+            # self.statistics.stop('serial')
             pool = mp.Pool(processes=num_workers)
-            self.statistics.start('parallel')
+            # self.statistics.start('parallel')
             map_responses = pool.map(
                 self.group_by_key,
                 map_responses,
                 chunksize=chunksize
             )
-            self.statistics.stop('parallel')
+            # self.statistics.stop('parallel')
             pool.close()
-            self.statistics.start('serial')
+            # self.statistics.start('serial')
             repeated, not_repeated = self.keys_repeated(map_responses)
             output += not_repeated
             map_responses = repeated
             is_repeated = len(repeated) != 0
-            self.statistics.stop('serial')
+            # self.statistics.stop('serial')
         return output
 
     def map(self, inputs, num_workers=None):
