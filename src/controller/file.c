@@ -2,14 +2,6 @@
 #include <stdlib.h>
 #include "utils.h"
 
-typedef struct file {
-    FILE *fp;
-    char *filename;
-    char** attributes;
-    int num_of_cols;
-    int num_of_rows;
-} file_t;
-
 file_t* create_file(char* filename, char* mode, char** attributes, int cols) {
     file_t* file = (file_t*) malloc(sizeof(file_t));
     if (!file) {
@@ -19,12 +11,14 @@ file_t* create_file(char* filename, char* mode, char** attributes, int cols) {
     file->filename = filename;
     file->num_of_cols = cols;
 
-    char file_header[256];
-    if (build_row(attributes, file_header, 256, cols) < 0) {
-        delete(file);
-        return NULL;
+    if (strcmp("a", mode) != 0) {
+        char file_header[256];
+        if (build_row(attributes, file_header, 256, cols) < 0) {
+            delete(file);
+            return NULL;
+        }
+        add_row(file, attributes, cols);
     }
-    add_row(file, attributes, cols);
     file->attributes = attributes;
     file->num_of_rows = 0;
     return file;
