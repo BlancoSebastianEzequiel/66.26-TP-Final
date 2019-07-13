@@ -1,7 +1,6 @@
 import time
 from typing import Type
 from math import ceil
-# from src.controller.threaded import Threaded as MapReduce
 from src.controller.pool import Pool as MapReduce
 from src.controller.utils import get_random_matrix_of_dim_n
 from src.model.element_by_row_block import ElementByRowBlock
@@ -9,19 +8,17 @@ from src.model.column_by_row import ColumnByRow
 from src.model.by_blocks import ByBlocks
 from src.model.multiply_matrices_interface import MultiplyMatricesInterface
 from src.controller.generate_output_data import OutputData
-from src.controller.utils import get_version_number
 
 
 SAVE = True
-VERSION = get_version_number()
 
 
 def gustafson(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING GUSTAFSON------------")
-    output_data = OutputData(version=VERSION)
+    output_data = OutputData()
     num_workers = 4
-    for matrix_dim in [2, 4, 16, 64, 100, 200, 300]:
+    for matrix_dim in [100, 200, 400]:
         print(f"RUNNING WITH MATRIX DIMENSION: {matrix_dim}")
         serial, parallel = run(num_workers, matrix_dim, model)
         output_data.add_data(serial, parallel, num_workers, matrix_dim)
@@ -35,9 +32,9 @@ def gustafson(model: Type[MultiplyMatricesInterface]):
 def amdahl(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING AMDAHL------------")
-    output_data = OutputData(version=VERSION)
-    matrix_dim = 100
-    for num_workers in [1, 2, 3, 4, 8, 16, 32, 64, 128]:
+    output_data = OutputData()
+    matrix_dim = 200
+    for num_workers in [1, 2, 4, 8, 16, 32, 64, 128]:
         print(f"RUNNING WITH NUM WORKERS: {num_workers}")
         serial, parallel = run(num_workers, matrix_dim, model)
         output_data.add_data(serial, parallel, num_workers, matrix_dim)
