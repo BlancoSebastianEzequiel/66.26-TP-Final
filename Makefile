@@ -37,7 +37,7 @@ sources := $(wildcard src/*.$(extension) src/*/*.$(extension))
 cblas_sources = $(filter-out src/vectorization/* src/test_pool.$(extension) src/mmx.$(extension), $(sources))
 mmx_sources = $(filter-out src/cblas/* src/test_pool.$(extension) src/cblas.$(extension), $(sources))
 test_sources := $(wildcard tests/*.$(extension) src/*/*.$(extension))
-test_pool_sources := $(wildcard src/test_pool.$(extension))
+test_pool_sources := $(wildcard src/controller/utils.h src/controller/utils.c src/controller/file.h src/controller/file.c src/test_pool.$(extension))
 
 # REGLAS
 #########
