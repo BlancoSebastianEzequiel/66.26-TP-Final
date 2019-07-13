@@ -11,3 +11,4 @@ test
 mmx
 cblas
 test_pool
+scripts/code.sh
