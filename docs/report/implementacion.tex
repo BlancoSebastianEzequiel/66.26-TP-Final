@@ -57,27 +57,27 @@
         Sean dos matrices \code{A} de \code{NxN} y \code{B} de \code{NxN}
         generamos una lista de tuplas a partir de las dos matrices.
         Se itera por cada elemento (\code{a\_ij}) de la matriz \code{A} y se
-        guarda en cada tupla el numero de fila \code{i} del elemento
+        guarda en cada tupla el número de fila \code{i} del elemento
         \code{a\_ij}, el elemento \code{a\_ij} y la fila \code{j} de la
         matriz \code{B}. Quedando cada tupla de la siguiente manera:\\
         \code{(i, a\_ij, B[j])}
 
     \paragraph{Mapeo}
 
-        De esta manera, en la funcion map, obtenemos partes de esta lista de
-        tuplas y devolvemos un par clave, valor donde la clave es la posicion
+        De esta manera, en la función map, obtenemos partes de esta lista de
+        tuplas y devolvemos un par clave, valor donde la clave es la posición
         de salida de la matriz resultante \code{(i, j)} y el valor es la
-        multiplicacion del elemento \code{a\_ij} contra cada elemento de la
+        multiplicación del elemento \code{a\_ij} contra cada elemento de la
         fila \code{j} de la matriz B
 
     \paragraph{Reduccion}
 
-        Obtenemos una posicion de salida y una lista de valores que resultaron
-        de la multiplicacion que se hizo en el map. Entonces se suman las
-        multiplicaciones parciales y se obtiene el valor en la posicion de salida
+        Obtenemos una posición de salida y una lista de valores que resultaron
+        de la multiplicación que se hizo en el map. Entonces se suman las
+        multiplicaciones parciales y se obtiene el valor en la posición de salida
         de la matriz resultante
 
-\subsection{Multiplicacion de matrices de columna por fila}
+\subsection{Multiplicación de matrices de columna por fila}
 
     \paragraph{Preprocesamiento}
 
@@ -92,28 +92,28 @@
         Recibimos una columna de la matriz A y una fila de la matriz B y por cada
         elemento de la columna \code{elem\_a} lo multiplicamos por cada elemento
         de la fila \code{elem\_b} obteniendo una matriz parcial de la
-        multiplicacion. Por cada multiplicacion guardamos en un vector una tupla
-        con un par clave valor donde la clave es la posicion de salida de la matriz
-        resultante y el valor es la multiplicacion anteriormente mencionada.
+        multiplicación. Por cada multiplicación guardamos en un vector una tupla
+        con un par clave valor donde la clave es la posición de salida de la matriz
+        resultante y el valor es la multiplicación anteriormente mencionada.
         Finalmente se devuelve el vector de tuplas.
 
     \paragraph{Reduccion}
 
-        Se recibe la posicion de salida de la matriz resultante y una lista de
-        multiplicaciones parciales. Entonces se suman estas y se devuelve la
-        posicion de salida y la suma.
+        Se recibe la posición de salida de la matriz resultante y una lista de
+        multiplicaciones parciales. Entonces se suman éstas y se devuelve la
+        posición de salida y la suma.
 
 \subsection{MMX}
-    Se escribio un codigo en \code{c} donde se multiplicaban dos matrices
-    por bloques. al momento de hacer la multiplicacion parcial de elementos donde
-    cada elemento es un bloque de la matriz se usa una intruccion llamada
+    Se escribió un código en \code{c} donde se multiplicaban dos matrices
+    por bloques. Al momento de hacer la multiplicación parcial de elementos, donde
+    cada elemento es un bloque de la matriz, se usa una intruccion llamada
     \code{\#pragma vector always} para decirle al  compilador que la siguiente
-    fraccion de codigo sera vectoriada.\\
-    Este codigo fue dessarrollado en el archivo \code{blocked\_dgemm\_sse.c} que
+    fracción de código será vectoriada.\\
+    Este código fue dessarrollado en el archivo \code{blocked\_dgemm\_sse.c} que
     se encuentra en el anexo.
 
 \subsection{Cblas}
-    Se uso una funcion de la libreria \code{cblas.h} de \code{c}. Esta funcion
+    Se uso una función de la librería \code{cblas.h} de \code{c}. Esta función
     cuya firma es:
     \lstset{language=C, numbers=left, tabsize=2, escapeinside=||}
     \begin{lstlisting}
@@ -132,7 +132,7 @@
             double *C,
             const int ldc);
     \end{lstlisting}
-    Esta llamada a la rutina \code{cblas\_dgemm} multiplica dos matrices:
+    Ésta llamada a la rutina \code{cblas\_dgemm} multiplica dos matrices:
     \begin{lstlisting}
         cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, k, B, n, beta, C, n);
     \end{lstlisting}
@@ -173,16 +173,15 @@
     \end{itemize}
 
 
-\subsection{Forma de ejecucion}
+\subsection{Forma de ejecución}
     Para el caso de Amdahl multiplicamos dos matrices de \code{100x100} y cada
     una de estas multiplicaciones la realizamos para \code{1}, \code{2},
     \code{3}, \code{4}, \code{8}, \code{16}, \code{32}, \code{64} y \code{128}
     threads.
 
     \hfill \break
-    Para el caso de gustafson se usan siempre 4 threads multiplicando dos matrices
-    de \code{2x2}, \code{4x4}, \code{16x16}, \code{64x64}, \code{100x100},
-    \code{200x200}, y \code{300x300}.
+    Para el caso de Gustafson se usan siempre 4 threads multiplicando dos matrices
+    de \code{100x100}, \code{200x200}, y \code{300x300}.
 
     \hfill \break
     Luego para el caso de \code{cblas} y de instrucciones vectoriales (MMX)
@@ -190,7 +189,7 @@
 
     \hfill \break
     Para poder probar este trabajo se debe clonar el repositorio (el link esta
-    en la caratula) y abrir una terminal en el \code{root} del mismo.
+    en la carátula) y abrir una terminal en el \code{root} del mismo.
 
     \hfill \break
     Para compilar \code{cblas} y las instrucciones vectoriales que estan en
@@ -198,16 +197,17 @@
     \lstinline[columns=fixed]{$ make}.
 
     \hfill \break
-    Para realizar el calculo de  \code{cblas} y las instrucciones vectoriales
-    que estan en lenguaje c se debe ejecutar: \\
-    \lstinline[columns=fixed]{$ ./app}.
+    Para realizar el cálculo de  \code{cblas} y las instrucciones vectoriales
+    que están en lenguaje c se debe ejecutar: \\
+    \lstinline[columns=fixed]{$ ./cblas}.
+    \lstinline[columns=fixed]{$ ./mmx}.
 
     \hfill \break
-    Para realizar el calculo de map-reduce se debe ejecutar: \\
+    Para realizar el cálculo de map-reduce se debe ejecutar: \\
     \lstinline[columns=fixed]{$ sh scripts/run.sh}.
 
     \hfill \break
-    Luego para generar los graficos que vemos en el informe se debe
+    Luego para generar los gráficos que vemos en el informe se debe
     ejecutar: \\
     \lstinline[columns=fixed]{$ sh scripts/generate_output_data.sh}
 
@@ -216,7 +216,7 @@
     \lstinline[columns=fixed]{$ sh scripts/make_report.sh}
 
     \hfill \break
-    Tambien hay un script que corre estos ultimos tres comandos en un solo script:\\
+    También hay un script que corre estos últimos tres comandos en un solo script:\\
     \lstinline[columns=fixed]{$ sh scripts/run_all.sh}
 
 \subsection{Datos sobre la computadora que se utilizó}

@@ -1,23 +1,14 @@
-Podemos decir que obtuvimos resultados esperados pero se tuvieron que hacer
-varias corridas y ajustar ciertos numeros para entender por que llegamos a estos
-resultados. \\
-Primero para que las curvas de speed up de Amdahl nos den bien habia
-que tener en cuenta que la dimension de las matrices tenia que ser lo
-suficientemente grandes como para tener un becnhmark rasonable, pero tambien hay
-un limite superior para el cual no superamos la capacidad de los procesadores.
-Luego, una vez mapeados los datos, se aprovecho el uso de los multiprocesadores
-para reordenar los datos de manera tal que la parte de \code{reduce} pueda leerlos.
-Es decir, cuando los ordenamos lo hacemos dividiendo el trabajo en partes donde
-cada una la realiza cada procesador. De esta manera obtenemos una organizacion
-tipo arbol donde evitamos un cuello de botella.\\
-Y segundo se coloco un \code{sleep} de medio segundo (que no afecto el calculo
+Podemos decir que obtuvimos resultados inesperados pero se tuvieron que hacer
+varias corridas y ajustar ciertos números para entender por que llegamos a
+éstos\\
+Se coloco un \code{sleep} de medio segundo (que no afectó el cálculo
 del tiempo paralelo-serie transcurrido) para evitar que cualquier trabajo que no
 sea puramente vinculado a la CPU afecte nuestro porgrama (como por ejemplo I/O) \\\\
 Finalmente podemos decir que hay que tener en cuenta que hay otros programas
-corriendo en las cuatro CPU que tiene la computadora en la cual se probo este
-programa y que dependiendo del tamaño de informacion que manejamos, podemos tener
-un cuello de botella ya sea por intercambios de memoria o por exceso de memoria.
-Entonces se tuvieron que hacer varias corridas analizando el trafico de
-informacion mediante el comando \code{gnome-system-monitor} donde filtrando
-los procesos y solo viedno los de \code{python} pudimos ver el uso de cada CPU
-y graficos al respecto.
+corriendo en las cuatro CPU y que dependiendo del tamaño de informacion que
+manejamos, podemos tener un cuello de botella ya sea por intercambios de memoria
+o por exceso de memoria.
+Entonces se tuvieron que hacer varias corridas analizando el tráfico de
+información mediante el comando \code{gnome-system-monitor} donde filtrando
+los procesos y solo viendo los de \code{python} pudimos ver el uso de cada CPU
+y gráficos al respecto.
