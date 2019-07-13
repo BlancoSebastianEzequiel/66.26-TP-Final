@@ -16,7 +16,6 @@ void basic_dgemm_sse(const double *restrict A, const double *restrict B,
     for (i = 0; i < block_size; ++i) {
         for (j = 0; j < block_size; ++j) {
             double cij = C[j*N + i];
-            #pragma vector always
             for (k = 0; k < block_size; ++k) {
                 cij += A[i + k * N] * B[k + j * N];
             }
