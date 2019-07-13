@@ -44,3 +44,7 @@ bool matrix_compare(const double *a, const double *b, int n) {
 int double_to_string(char* buffer, double num, int max_bytes) {
     return snprintf(buffer, max_bytes, "%lf", num);
 }
+
+int int_to_string(char* buffer, int num, int max_bytes) {
+    return snprintf(buffer, max_bytes, "%d", num);
+}
