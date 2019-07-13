@@ -1,3 +1,3 @@
 program, time_elapsed, matrix_dim, number_of_threads
-cblas_dgemm, 0.032921, 500, 1
-blocked_dgemm_sse, 0.367660, 500, 1
+cblas_dgemm, 0.058848, 400, 1
+blocked_dgemm_sse, 0.116926, 400, 1
