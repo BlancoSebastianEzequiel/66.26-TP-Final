@@ -1,8 +1,8 @@
 import numpy as np
 from math import ceil
 from src.model.multiply_matrices_interface import MultiplyMatricesInterface
-# from src.controller.process import Process as MapReduce
-from src.controller.pool import Pool as MapReduce
+# from src.controller.pool import Pool as MapReduce
+from src.controller.process import Process as MapReduce
 from typing import Type
 
 
