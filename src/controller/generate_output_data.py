@@ -7,7 +7,7 @@ from src.controller.utils import get_null_list_of_dim_n
 
 
 class OutputData:
-    def __init__(self, version=1, avoid=False):
+    def __init__(self):
         self.data = {
             'number_of_threads': [],
             'parallel_time': [],
@@ -16,14 +16,8 @@ class OutputData:
         }
         self._colors = ['b-', 'g-', 'r-', 'c-', 'm-', 'y-', 'k-', 'w-']
         self.dfs_data = []
-        pics_path = f"./docs/report/pics/graphs_v{version}/"
-        if not os.path.isdir(pics_path) and avoid:
-            os.system(f'mkdir {pics_path}')
-        self.pics_path = pics_path
-        files_path = f"./src/data/data_v{version}/"
-        if not os.path.isdir(files_path) and avoid:
-            os.system(f'mkdir {files_path}')
-        self.files_path = files_path
+        self.pics_path = "./docs/report/pics/"
+        self.files_path = "./src/data/"
 
     def add_data(self, serial, parallel, num_workers, matrix_dimension):
         self.data['number_of_threads'].append(num_workers)
@@ -38,6 +32,10 @@ class OutputData:
     @staticmethod
     def amdahl_speed_up(s, p, n):
         return (s + p) / (s + p/n)
+
+    @staticmethod
+    def speed_up(s_n, p_n, s_1, p_1):
+        return (s_1 + p_1) / (s_n + p_n)
 
     @staticmethod
     def amdahl_max_speed_up(s, p):
@@ -80,10 +78,11 @@ class OutputData:
         )
         df['real_speed_up'] = get_null_list_of_dim_n(len(df.index))
         df['real_speed_up'] = df.apply(
-            lambda x: self.amdahl_speed_up(
+            lambda x: self.speed_up(
                 x['serial_time'],
                 x['parallel_time'],
-                x['number_of_threads']
+                self.data['serial_time'][0],
+                self.data['parallel_time'][0]
             ),
             axis=1
         )
