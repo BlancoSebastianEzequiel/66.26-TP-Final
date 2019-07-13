@@ -1,0 +1,28 @@
+\subsection{Pool}
+    El módulo de \code{multiprocessing} puede usar múltiples procesos, pero aún
+    tiene que trabajar con el bloqueo global del intérprete de Python, lo que
+    significa que no puede compartir memoria entre sus procesos. Por lo tanto,
+    cuando intenta iniciar un Pool, necesita copiar variables útiles, procesar
+    su cálculo y recuperar el resultado. Esto le cuesta un poco de tiempo para
+    cada proceso y lo hace menos efectivo. Pero esto sucede porque se hace
+    un cálculo muy pequeño: el \code{multiprocessing} solo es útil para cálculos
+    más grandes, cuando la copia de la memoria y la recuperación de resultados
+    es más barata (en el tiempo) que el cálculo.\\
+
+    Un cálculo costoso es más eficiente con el \code{multiprocessing}, incluso
+    si no siempre se tiene lo que podría esperar (podría tener una aceleración x4,
+    pero solo se obtuvo x2). Hay que tener en cuenta que \code{Pool} tiene que
+    duplicar cada bit de memoria utilizada en el cálculo, por lo que puede ser
+    costoso.\\
+    También hay que saber que numpy tiene una gran cantidad de funciones
+    caras escritas en C / Fortran y que ya están en paralelo, por lo que no
+    se puede hacer mucho para acelerarlas.
+\subsection{Prueba de latecia de pool, python y c}
+    A continuación se hizo un calculo el cual requiere iterar unas 10000000 veces
+    y hacer una acumulacion para una suma. Por lo tanto se hizo la misma operacion
+    en c, en python y en python pero usando el modulo \code{pool} donde dividimos el
+    trabajo en 4 procesos.
+    \def\text{tiempos de la pruebas en segundos}
+    \def\path{test_pool.png}
+    \def\scale{.6}
+    \input{report/image.tex}
