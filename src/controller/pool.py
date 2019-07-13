@@ -21,17 +21,25 @@ class Pool(MapReduce):
             inputs,
             chunksize=chunksize
         )
-        self.statistics.stop('parallel')
-        data = self.group_by_key_mapped_values(map_responses, num_workers)
+        # data = self.group_by_key_mapped_values(map_responses, num_workers)
+        data = self.group_by_key(map_responses)
         pool.close()
-        time.sleep(self.sleep_sec)
+        pool.join()
+        self.statistics.stop('parallel')
+        print(f"parallel: {self.statistics.get_time_elapsed('parallel')}")
+        # time.sleep(self.sleep_sec)
         return data
 
     def reduce(self, partitioned_data, num_workers=1):
-        pool = mp.Pool(processes=num_workers)
+        # pool = mp.Pool(processes=num_workers)
         self.statistics.start('serial')
-        reduced_values = pool.map(self.reduce_func, partitioned_data)
+        # reduced_values = pool.map(self.reduce_func, partitioned_data)
+        reduced_values = []
+        for data in partitioned_data:
+            reduced_values.append(self.reduce_func(data))
+        # pool.close()
+        # pool.join()
         self.statistics.stop('serial')
-        pool.close()
-        time.sleep(self.sleep_sec)
+        print(f"serial: {self.statistics.get_time_elapsed('serial')}")
+        # time.sleep(self.sleep_sec)
         return reduced_values
