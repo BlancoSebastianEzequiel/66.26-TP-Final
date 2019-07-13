@@ -8,4 +8,6 @@ src/CPU_stats.ipynb
 CMakeLists.txt
 cmake-build-debug/
 test
-app
+mmx
+cblas
+test_pool
