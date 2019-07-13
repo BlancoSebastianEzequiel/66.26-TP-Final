@@ -2,10 +2,8 @@
 
 Es la mejora en la velocidad de ejecución de una tarea ejecutada en dos
 arquitecturas similares con diferentes recursos.\\
-La noción de speedup fue establecida por la ley de Amdahl, que estaba
-dirigida particularmente a la computación paralela. Sin embargo, la speedup se
-puede usar más generalmente para mostrar el efecto en el rendimiento después de
-cualquier mejora en los recursos.\\
+El speed-up se puede usar más generalmente para mostrar el efecto en el
+rendimiento después de cualquier mejora en los recursos.\\
 De forma genérica se define como:
 \begin{equation}
     \textbf{speed\_up} = \dfrac{Rendimiento\_con\_mejora}{Rendimiento\_sin\_mejora}
@@ -24,16 +22,16 @@ alteración de uno de sus componentes está limitada por la fracción de tiempo
 que se utiliza dicho componente.\\
 
 Suponiendo que nuestro algoritmo se divide en una parte secuencial \code{s}
-u una parte paralelizable \code{p} y siendo \code{N} la cantidad de threads,
+y una parte paralelizable \code{p} y siendo \code{N} la cantidad de threads,
 entonces podemos decir que:
 \begin{equation}
     \textbf{speed\_up} = \dfrac{s+p}{s+\dfrac{p}{N}}
 \end{equation}
 
-Amdahl establece un límite superior al speedup que puede obtenerse al
+Amdahl establece un límite superior al speed-up que puede obtenerse al
 introducir una mejora en un determinado algoritmo. Este límite superior está
 determinado por la porción de la tarea sobre la que se aplique la mejora.
-Entonces si tomamos la ecuacion anterior y calculamos el limite de la misma con
+Entonces si tomamos la ecuación anterior y calculamos el límite de la misma con
 \code{N} tendiendo a infinito tenemos:
 \begin{equation}
     \textbf{speed\_up\_max} = 1 + \dfrac{p}{s}
@@ -47,12 +45,12 @@ paralelizado. La ley de Gustafson está muy ligada a la ley de Amdahl, que pone
 límite a la mejora que se puede obtener gracias a la paralelización, dado un
 conjunto de datos de tamaño fijo, ofreciendo así una visión pesimista del
 procesamiento paralelo. Por el contrario la ley de Gustafson  propone realizar
-mas trabajo con la misma cantidad de recursos, de esta manera aprovecho la
+mas trabajo con la misma cantidad de recursos, de esta manera aprovecha la
 paralelizacion para calcular mas cosas.\\
 
-Entonces siendo \code{s} el tiempo de la ejecucucion de la seccion serie, siendo
-\code{p} el tiempo de la ejecucion de la seccion paralela y siendo \code{N} la
-cantidad de procesadores podemos calcular el speed up como:
+Entonces siendo \code{s} el tiempo de la ejecución de la sección serie, siendo
+\code{p} el tiempo de la ejecución de la sección paralela y siendo \code{N} la
+cantidad de procesadores podemos calcular el speed-up como:
 \begin{equation}
     \textbf{speed\_up} = \dfrac{s+p*N}{s+p}
 \end{equation}
@@ -68,8 +66,8 @@ con misma clave en un vector para entregarle a la fase de reduce un conjunto de
 tuplas \code{(clave, valores)} donde en este caso el valor son todos los valores
 en una lista.\\\\
 \code{Reduce} recibe un conjunto de tuplas \code{(clave, valores)} donde el valor
-es una lista de todos los valores que tenian la misma clave. Entonces reduce
-aplica una funcion a todos estos valores para retornar un unico valor y asi
+es una lista de todos los valores que tenían la misma clave. Entonces reduce
+aplica una función a todos estos valores para retornar un único valor y asi
 devolver un conjunto de tuplas \code{(clave, valor)}\\\\
 La principal ventaja de MapReduce es que es fácil de escalar procesamiento de
 datos en múltiples nodos.\\
@@ -115,8 +113,8 @@ en una sola máquina o en un cluster.\\
     \subsubsection{CBLAS}
         BLAS (Subprogramas de Álgebra Lineal Básica) son rutinas que proporcionan
         bloques de construcción estándar para realizar operaciones básicas de
-        vectores y matrices. Las BLAS de nivel 1 realizan operaciones escalares,
-        vectoriales y vectoriales, las BLAS de nivel 2 realizan operaciones de
+        vectores y matrices. Las BLAS de nivel 1 realizan operaciones escalares
+        y vectoriales, las BLAS de nivel 2 realizan operaciones de
         vectores matriciales y las BLAS de nivel 3 realizan operaciones
         de matriz-matriz. Debido a que los BLAS son eficientes, portátiles y
         ampliamente disponibles, se usan comúnmente en el desarrollo de software

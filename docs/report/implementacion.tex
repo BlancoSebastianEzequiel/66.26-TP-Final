@@ -8,50 +8,49 @@
     \input{report/image.tex}
 
     En nuestro caso creamos una clase llamada \code{MapReduce} la cual usa una
-    libreria de \code{python} llamada \code{multiprocessing} en donde usamos el
-    modulo \code{pool} el cual ofrece un medio conveniente para paralelizar la
+    librería de \code{python} llamada \code{multiprocessing} en donde usamos el
+    módulo \code{pool} el cual ofrece un medio conveniente para paralelizar la
     ejecución de una función a través de múltiples valores de entrada, distribuyendo
     los datos de entrada a través de procesos (paralelismo de datos).\\
 
-    Entonces lo que hicimos fue instanciar dos \code{pool}, uno para hacer el map y
-    el otro para el reduce de manera que el primero se le pasa como atributo la
-    cantidad de worker en el cual se quiere paralelizar el problema y el segundo
-    solo se usa uno de manera tal que la fase de reduce sea la serie.
+    Entonces lo que hicimos fue instanciar un \code{pool} para hacer el map de
+    manera que se le pasa como atributo la cantidad de workers en el cual se
+    quiere paralelizar el problema.
 
-\subsection{Multiplicacion de matrices por bloques}
+\subsection{Multiplicación de matrices por bloques}
 
     \paragraph{Preprocesamiento}
 
         Sean dos matrices \code{A} de \code{NxN} y \code{B} de \code{NxN} las
         dividimos en \code{(N/2)x(N/2)} bloques cada una. Luego generamos una
-        lista de tuplas donde cada una tiene la posicion \code{(r, c)} de un bloque
-        de la matriz \code{A}, tiene el bloque en custion \code{a\_block\_rc},
-        y la fila numero \code{c} de bloques de la matriz \code{B}, quedando
+        lista de tuplas donde cada una tiene la posición \code{(r, c)} de un bloque
+        de la matriz \code{A}, tiene el bloque en custión \code{a\_block\_rc},
+        y la fila número \code{c} de bloques de la matriz \code{B}, quedando
         con este formato: \\
         \code{(r, c, a\_block\_rc, b\_block\_c)}
 
     \paragraph{Mapeo}
 
-        Recibimos la posicion \code{r}, \code{c} del bloque \code{a}, el bloque
+        Recibimos la posición \code{r, c} del bloque \code{a}, el bloque
         \code{a} y una lista de bloques \code{b} que es la fila \code{c} de
         bloques en la matriz B.\\
         Entonces multiplicamos el bloque \code{a} por cada bloque de la lista de
         bloques \code{b} y guardamos en un vector una tupla con una clave
-        \code{r}, \code{c\_b} donde \code{c\_b} es el indice en la lista de
-        bloques \code{b} y como valor guardamos la multiplicacion. Por cada
-        multiplicacion, agregamos una de estas tuplas al vector de salida para
-        luego devolver este.
+        \code{r, c\_b} donde \code{c\_b} es el indice en la lista de
+        bloques \code{b} y como valor guardamos la multiplicación. Por cada
+        multiplicación, agregamos una de estas tuplas al vector de salida para
+        luego devolver éste.
 
     \paragraph{Reduccion}
 
-        Recibimos la posicion de un bloque de salida y una lista de
+        Recibimos la posición de un bloque de salida y una lista de
         multiplicaciones parciales de bloques. Se suman estas multiplicaciones
-        parciales y se devuelve un vector con los valores resultantes del la
-        multiplicacion. Pero por cada valor se calcula la posicion de salida del
-        mismo en la matriz resultante y nos deshacemos de la posicion de los
+        parciales y se devuelve un vector con los valores resultantes de la
+        multiplicación. Pero por cada valor se calcula la posición de salida del
+        mismo en la matriz resultante y nos deshacemos de la posición de los
         bloques
 
-\subsection{Multiplicacion de matrices de elemento por fila}
+\subsection{Multiplicación de matrices de elemento por fila}
 
     \paragraph{Preprocesamiento}
 
