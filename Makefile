@@ -4,12 +4,6 @@
 # Extensión de los archivos a compilar (c para C, cpp o cc o cxx para C++).
 extension = c
 
-# Si usa funciones de math.h, descomentar (quitar el '#' a) la siguiente línea.
-math = si
-
-# Descomentar si se quiere ver como se invoca al compilador
-#verbose = si
-
 
 # CONFIGURACION "AVANZADA"
 ###########################
@@ -17,25 +11,14 @@ math = si
 # Opciones para el compilador C/C++ para tratamiento de errores y warnings.
 CFLAGS = -Wall -Werror -pedantic -pedantic-errors
 
-# Para optimizar el binario resultante lo mejor posible
-CFLAGS += -O3
-
-# Para valgrind o debug
-CFLAGS += -ggdb -DDEBUG -fno-inline
-
 # Opciones del cblas.
-LDFLAGS += -lblas
+CFLAGS += -lblas
+
+# autovectorization
+AUTOVECTORIZATION += -O2 -ftree-vectorize -msse2 -ftree-vectorizer-verbose=5
 
 # Estandar de C a usar
 CSTD = c99
-
-# Linkea con libm de ser necesario.
-ifdef math
-LDFLAGS += -lm
-endif
-
-# Se reutilizan los flags de C para C++ también
-CXXFLAGS += $(CFLAGS)
 
 CFLAGS += -std=$(CSTD)
 LD = $(CC)
@@ -44,39 +27,47 @@ occ := $(CC)
 ocxx := $(CXX)
 orm := $(RM)
 old := $(LD)
-ifdef verbose
 RM := $(RM) -v
-else
 CC =  @echo "  CC  $@"; $(occ)
 CXX = @echo "  CXX $@"; $(ocxx)
 RM =  @echo "  CLEAN"; $(orm)
 LD =  @echo "  LD  $@"; $(old)
-endif
 
 sources := $(wildcard src/*.$(extension) src/*/*.$(extension))
+cblas_sources = $(filter-out src/vectorization/* src/test_pool.$(extension) src/mmx.$(extension), $(sources))
+mmx_sources = $(filter-out src/cblas/* src/test_pool.$(extension) src/cblas.$(extension), $(sources))
 test_sources := $(wildcard tests/*.$(extension) src/*/*.$(extension))
+test_pool_sources := $(wildcard src/test_pool.$(extension))
 
 # REGLAS
 #########
 
 .PHONY: all clean
 
-all: compile_code compile_test
+all: compile_cblas compile_mmx compile_test test_pool
 
-files:
-	$(test_sources)
+test_pool:
+	$(LD) $(test_pool_sources) -o test_pool $(CFLAGS)
 
-compile_code:
-	$(LD) $(sources) -o app $(LDFLAGS)
+run_test_pool:
+	./test_pool
+	python src/test_pool.py
+
+compile_cblas:
+	$(LD) $(cblas_sources) -o cblas $(CFLAGS)
+
+compile_mmx:
+	$(LD) $(mmx_sources) -o mmx $(CFLAGS) $(AUTOVECTORIZATION)
 
 run_code:
-	./app
+	./cblas
+	./mmx
 
 run_valgrind_code:
 	valgrind --show-leak-kinds=all --leak-check=full ./app
 
 compile_test:
-	$(LD) $(test_sources) -o test $(LDFLAGS)
+	$(LD) $(test_sources) -o test $(CFLAGS)
 
 run_test:
 	./test
@@ -85,5 +76,5 @@ run_valgrind_test:
 	valgrind --show-leak-kinds=all --leak-check=full ./test
 
 clean:
-	$(RM) -f app test
+	$(RM) -f cblas mmx test test_pool
 
