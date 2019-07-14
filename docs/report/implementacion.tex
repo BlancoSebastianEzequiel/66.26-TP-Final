@@ -180,8 +180,9 @@
     threads.
 
     \hfill \break
-    Para el caso de Gustafson se usan siempre 4 threads multiplicando dos matrices
-    de \code{100x100}, \code{200x200}, y \code{300x300}.
+    Para el caso de Gustafson se usan se multiplican dos matrices de
+    \code{100x100} con 1 thread, dos matrices de \code{140x140} con 2 threads y
+    dos matrices de \code{200x200} con 4 threads.
 
     \hfill \break
     Luego para el caso de \code{cblas} y de instrucciones vectoriales (MMX)
@@ -192,14 +193,14 @@
     en la carátula) y abrir una terminal en el \code{root} del mismo.
 
     \hfill \break
-    Para compilar \code{cblas} y las instrucciones vectoriales que estan en
+    Para compilar \code{cblas} y las instrucciones vectoriales que están en
     lenguaje c se debe ejecutar: \\
     \lstinline[columns=fixed]{$ make}.
 
     \hfill \break
     Para realizar el cálculo de  \code{cblas} y las instrucciones vectoriales
     que están en lenguaje c se debe ejecutar: \\
-    \lstinline[columns=fixed]{$ ./cblas}.
+    \lstinline[columns=fixed]{$ ./cblas}.\\
     \lstinline[columns=fixed]{$ ./mmx}.
 
     \hfill \break
@@ -221,7 +222,7 @@
 
 \subsection{Datos sobre la computadora que se utilizó}
     El equipo sobre el que se realizarán las mediciones es una laptop con un
-    procesador Intel core I7 que posee 4 nucleos a 2.7 Ghz, es decir, soporta
+    procesador Intel core I7 que posee 4 núcleos a 2.7 GHz, es decir, soporta
     hasta 4 threads en paralelo, con 16 Gb de memoria y corriendo sobre un
     sistema Linux.\\
     Para averiguar estos datos en linux se ejecutaron los siguientes comandos:\\
