@@ -2,7 +2,7 @@
 ################
 
 # Extensión de los archivos a compilar (c para C, cpp o cc o cxx para C++).
-extension = c
+ext = c
 
 
 # CONFIGURACION "AVANZADA"
@@ -32,11 +32,11 @@ CC =  @echo "  CC  $@"; $(occ)
 RM =  @echo "  CLEAN"; $(orm)
 LD =  @echo "  LD  $@"; $(old)
 
-sources := $(wildcard src/*.$(extension) src/*/*.$(extension))
-cblas_sources = $(filter-out src/vectorization/* src/test_pool.$(extension) src/mmx.$(extension), $(sources))
-mmx_sources = $(filter-out src/cblas/* src/test_pool.$(extension) src/cblas.$(extension), $(sources))
-test_sources := $(wildcard tests/*.$(extension) src/*/*.$(extension))
-test_pool_sources := $(wildcard src/controller/utils.h src/controller/utils.c src/controller/file.h src/controller/file.c src/test_pool.$(extension))
+sources := $(wildcard src/*.$(ext) src/*/*.$(ext))
+cblas_sources = $(filter-out src/vectorization/* src/test_pool.$(ext) src/mmx.$(ext), $(sources))
+mmx_sources = $(filter-out src/cblas/* src/test_pool.$(ext) src/cblas.$(ext), $(sources))
+test_sources := $(wildcard tests/*.$(ext) src/*/*.$(ext))
+test_pool_sources := $(wildcard src/controller/utils.h src/controller/utils.c src/controller/file.h src/controller/file.c src/test_pool.$(ext))
 
 # REGLAS
 #########
