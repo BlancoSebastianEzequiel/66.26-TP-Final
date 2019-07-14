@@ -4,6 +4,7 @@ import pandas as pd
 from subprocess import call
 import matplotlib.pyplot as plt
 from src.controller.utils import get_null_list_of_dim_n
+import multiprocessing as mp
 
 
 class OutputData:
@@ -27,7 +28,14 @@ class OutputData:
 
     @staticmethod
     def gustafson_speed_up(a, b, p):
-        return (a + p * b) / (a + b)
+        """
+        :param a: serial section
+        :param b: parallel section
+        :param p: number of processors
+        :return: speed-up
+        """
+        alpha = a / (a + b)
+        return p - (alpha * (p-1))
 
     @staticmethod
     def amdahl_speed_up(s, p, n):
@@ -210,7 +218,8 @@ class OutputData:
         columns = [
             'matrix_dimension',
             'parallel_time',
-            'serial_time'
+            'serial_time',
+            'number_of_threads'
         ]
         df = df.loc[:, columns]
         df['speed_up'] = [0] * len(df.index)
@@ -218,7 +227,7 @@ class OutputData:
             lambda x: self.gustafson_speed_up(
                 x['serial_time'],
                 x['parallel_time'],
-                self.data['number_of_threads'][0]
+                mp.cpu_count()
             ),
             axis=1
         )
