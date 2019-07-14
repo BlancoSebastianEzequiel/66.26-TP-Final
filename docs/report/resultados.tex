@@ -74,20 +74,20 @@
     \clearpage
 
 \subsection{Cblas e instrucciones vectorizadas}
-    \def\text{Tiempo serie de multiplicacion en segundos}
+    \def\text{Tiempo serie de multiplicación en segundos}
     \def\path{dgemm.png}
     \def\scale{.6}
     \input{report/image.tex}
 
-    Podemos decir que en general, las corridas con mapReduce, en el caso donde se
-    uso un solo thread, si sumamos el tiempo paralelo y serie (que es todo serie
-    ya que se usa un solo thread) nos da en promedio de los tres tipos de
-    multiplicacion tardaron alrededor de 3 segundos. En cambio podemos ver que
-    usando \code{cblas} tenemos un tiempo de 0.03 segundos y usando las
-    instrucciones vectorizadas 0.36 segundos.\\
-    De esta manera vemos que \code{cblas} y las instrucciones vectorizadas aprovechan
-    mucho mejor el hardware para la realizacion de la misma operacion. Tambien es
-    cierto que el map reduce hace uso de un modulo de \code{python} llamado
-    \code{pool} que puede ser que sume latencia al momento de dividir el trabajo,
-    pero cuando aumentamos mucho el volumen del trabajo se ve en los graficos que
-    se aprovecha mejor la paralelizacion.
+    Podemos ver que \code{cblas} tiene una mejor performance que las instrucciones
+    vectoriales. Por otro lado podemos ver que hay una mejora al usar las
+    instrucciones vectoriales en el código \code{blocked\_dgemm\_sse} respecto del
+    mismo código que no hace uso de las mismas.
+    De esta manera vemos que \code{cblas} y las instrucciones vectorizadas
+    aprovechan mucho mejor el hardware para la realización de la misma operación.
+    También es cierto que el map-reduce hace uso de un módulo de \code{python}
+    llamado \code{pool} que suma latencia al momento de dividir el trabajo ya
+    que sufre mucho el costo de la comunicación entre procesadores. En el análisis
+    de los resultados de explica con detalle el problema del módulo \code{pool}
+    y se muestra una prueba de la diferencia considerable de performance entre
+    \code{c}, \code{python} y \code{python usando pool}
