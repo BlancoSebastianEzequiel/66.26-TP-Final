@@ -19,10 +19,15 @@
     se puede hacer mucho para acelerarlas.
 \subsection{Prueba de latecia de pool, python y c}
     A continuación se hizo un calculo el cual requiere iterar unas 10000000 veces
-    y hacer una acumulacion para una suma. Por lo tanto se hizo la misma operacion
+    y hacer una acumulacion para una suma. Por lo tanto se hizo la misma operación
     en c, en python y en python pero usando el modulo \code{pool} donde dividimos el
     trabajo en 4 procesos.
     \def\text{tiempos de la pruebas en segundos}
     \def\path{test_pool.png}
     \def\scale{.6}
     \input{report/image.tex}
+    Podemos ver que \code{c} es mucho mas eficiente siendo 40 veces mas rápido
+    \code{python}. También podemos ver que usando el módulo \code{pool}, dividiendo
+    el trabajo en 4 cores tarda más que el mismo trabajo sin usar \code{pool}
+    en python, lo cual demuestra que este módulo es infeficiente como se explicó
+    anteriormente respecto del uso de recursos. 
