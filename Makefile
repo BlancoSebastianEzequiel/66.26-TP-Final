@@ -15,8 +15,8 @@ CFLAGS = -Wall -Werror -pedantic -pedantic-errors
 CFLAGS += -lblas
 
 # autovectorization
-AUTOVECTORIZATION += -LNO:simd[=2] -LNO:simd_verbose=ON
-AUTOVECTORIZATION += -fopt-info-vec-all
+AUTOVECTORIZATION += -LNO:simd[=2] -LNO:simd_verbose=ON -O2 -ftree-vectorize -ftree-vectorizer-verbose=3
+# AUTOVECTORIZATION += -fopt-info-vec-all
 
 # Ignore pragmas
 IGNORE_PRAGMAS = -Wno-unknown-pragmas
@@ -45,9 +45,9 @@ test_pool_sources := $(wildcard src/controller/utils.$(ext) src/controller/file.
 
 .PHONY: all clean
 
-all: compile_cblas compile_mmx compile_test test_pool
+all: compile_cblas compile_mmx compile_test compile_test_pool
 
-test_pool:
+compile_test_pool:
 	$(LD) $(test_pool_sources) -o test_pool $(CFLAGS)
 
 run_test_pool:
@@ -58,7 +58,7 @@ compile_cblas:
 	$(LD) $(cblas_sources) -o cblas $(CFLAGS)
 
 compile_mmx:
-	$(LD) $(mmx_sources) -o mmx $(CFLAGS) $(IGNORE_PRAGMAS) $(AUTOVECTORIZATION)
+	$(LD) $(mmx_sources) -o mmx $(CFLAGS) $(AUTOVECTORIZATION)
 
 run_code:
 	./cblas
