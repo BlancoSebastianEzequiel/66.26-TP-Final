@@ -18,7 +18,11 @@ double run_blocked_dgemm_sse(int N, double* A, double* B, double* C) {
     return elapsed_seconds;
 }
 
-int main() {
+int main(int argc, char **argv) {
+    if (argc != 2) {
+        return 1;
+    }
+    char* program_name = argv[1];
     char* attributes[4] = {
             "program",
             "time_elapsed",
@@ -32,7 +36,7 @@ int main() {
     double C[N*N];
     double elapsed_seconds;
     char elapsed_second_str[20];
-    char* values[4] = {"blocked_dgemm_sse", elapsed_second_str, "400", "1"};
+    char* values[4] = {program_name, elapsed_second_str, "400", "1"};
     elapsed_seconds = run_blocked_dgemm_sse(N, A, B, C);
     double_to_string(elapsed_second_str, elapsed_seconds, 20);
     add_row(file, values, 4);
