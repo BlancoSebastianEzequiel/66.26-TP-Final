@@ -15,7 +15,8 @@ CFLAGS = -Wall -Werror -pedantic -pedantic-errors
 CFLAGS += -lblas
 
 # autovectorization
-AUTOVECTORIZATION += -O2 -ftree-vectorize -msse2 -ftree-vectorizer-verbose=5
+AUTOVECTORIZATION += -O2 -ftree-vectorize -ftree-vectorizer-verbose=3
+# AUTOVECTORIZATION += -fopt-info-vec-all
 
 # Estandar de C a usar
 CSTD = c99
