@@ -25,12 +25,10 @@ CFLAGS += -std=$(CSTD)
 LD = $(CC)
 
 occ := $(CC)
-ocxx := $(CXX)
 orm := $(RM)
 old := $(LD)
 RM := $(RM) -v
 CC =  @echo "  CC  $@"; $(occ)
-CXX = @echo "  CXX $@"; $(ocxx)
 RM =  @echo "  CLEAN"; $(orm)
 LD =  @echo "  LD  $@"; $(old)
 
