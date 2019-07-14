@@ -15,8 +15,11 @@ CFLAGS = -Wall -Werror -pedantic -pedantic-errors
 CFLAGS += -lblas
 
 # autovectorization
-AUTOVECTORIZATION += -O2 -ftree-vectorize -ftree-vectorizer-verbose=3
-# AUTOVECTORIZATION += -fopt-info-vec-all
+AUTOVECTORIZATION += -LNO:simd[=2] -LNO:simd_verbose=ON
+AUTOVECTORIZATION += -fopt-info-vec-all
+
+# Ignore pragmas
+IGNORE_PRAGMAS = -Wno-unknown-pragmas
 
 # Estandar de C a usar
 CSTD = c99
@@ -32,11 +35,10 @@ CC =  @echo "  CC  $@"; $(occ)
 RM =  @echo "  CLEAN"; $(orm)
 LD =  @echo "  LD  $@"; $(old)
 
-sources := $(wildcard src/*.$(ext) src/*/*.$(ext))
-cblas_sources = $(filter-out src/vectorization/* src/test_pool.$(ext) src/mmx.$(ext), $(sources))
-mmx_sources = $(filter-out src/cblas/* src/test_pool.$(ext) src/cblas.$(ext), $(sources))
+cblas_sources := $(wildcard src/cblas.$(ext) src/cblas/*.$(ext) src/controller/utils.$(ext) src/controller/file.$(ext))
+mmx_sources := $(wildcard src/mmx.$(ext) src/vectorization/*.$(ext) src/controller/utils.$(ext) src/controller/file.$(ext))
 test_sources := $(wildcard tests/*.$(ext) src/*/*.$(ext))
-test_pool_sources := $(wildcard src/controller/utils.h src/controller/utils.c src/controller/file.h src/controller/file.c src/test_pool.$(ext))
+test_pool_sources := $(wildcard src/controller/utils.$(ext) src/controller/file.$(ext) src/test_pool.$(ext))
 
 # REGLAS
 #########
@@ -56,7 +58,7 @@ compile_cblas:
 	$(LD) $(cblas_sources) -o cblas $(CFLAGS)
 
 compile_mmx:
-	$(LD) $(mmx_sources) -o mmx $(CFLAGS) $(AUTOVECTORIZATION)
+	$(LD) $(mmx_sources) -o mmx $(CFLAGS) $(IGNORE_PRAGMAS) $(AUTOVECTORIZATION)
 
 run_code:
 	./cblas
@@ -66,7 +68,7 @@ run_valgrind_code:
 	valgrind --show-leak-kinds=all --leak-check=full ./app
 
 compile_test:
-	$(LD) $(test_sources) -o test $(CFLAGS)
+	$(LD) $(test_sources) -o test $(CFLAGS) $(IGNORE_PRAGMAS)
 
 run_test:
 	./test
