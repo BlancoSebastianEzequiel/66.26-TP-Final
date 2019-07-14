@@ -45,7 +45,7 @@ test_pool_sources := $(wildcard src/controller/utils.$(ext) src/controller/file.
 
 .PHONY: all clean
 
-all: compile_cblas compile_mmx compile_test compile_test_pool
+all: compile_cblas compile_mmx compile_mmx_no_vec compile_test compile_test_pool
 
 compile_test_pool:
 	$(LD) $(test_pool_sources) -o test_pool $(CFLAGS)
@@ -60,9 +60,13 @@ compile_cblas:
 compile_mmx:
 	$(LD) $(mmx_sources) -o mmx $(CFLAGS) $(AUTOVECTORIZATION)
 
+compile_mmx_no_vec:
+	$(LD) $(mmx_sources) -o mmx_no_vec $(CFLAGS)
+
 run_code:
 	./cblas
-	./mmx
+	./mmx "vectorized blocked_dgemm_sse"
+	./mmx_no_vec "not vectorized blocked_dgemm_sse"
 
 run_valgrind_code:
 	valgrind --show-leak-kinds=all --leak-check=full ./app
