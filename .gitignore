@@ -9,6 +9,7 @@ CMakeLists.txt
 cmake-build-debug/
 test
 mmx
+mmx_no_vec
 cblas
 test_pool
 scripts/code.sh
