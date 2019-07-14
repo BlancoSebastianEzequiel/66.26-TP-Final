@@ -8,6 +8,9 @@ import multiprocessing as mp
 
 
 class OutputData:
+    pics_path = "./docs/report/pics/"
+    files_path = "./src/data/"
+
     def __init__(self):
         self.data = {
             'number_of_threads': [],
@@ -150,6 +153,12 @@ class OutputData:
     def delete_all_data(cls):
         os.system('rm  src/data/*')
 
+    @classmethod
+    def delete_json_data(cls):
+        path = f"{cls.files_path}data.json"
+        if cls.file_exists(path):
+            os.system(f'rm  {path}')
+
     def save_df_data_to_json(self):
         path = f'{self.files_path}data.json'
         data = []
@@ -182,9 +191,12 @@ class OutputData:
     def graph_dfs(self):
         for df_data in self.dfs_data:
             df_name = df_data['df_path_name']
+            print(f"graph name: {df_data['graph_name']}")
+            print(f"df_name: {df_name}")
             table_graph_name = df_name.split('.csv')[0] + '.png'
             df_path_name = self.files_path + df_name
             df = pd.read_csv(df_path_name, low_memory=False, sep=',')
+            print(f"df.columns: {list(df.columns)}")
             self.save_df_in_image(df, table_graph_name)
             if df_data['has_graph']:
                 y_axis = df_data['y_axis']
@@ -231,11 +243,13 @@ class OutputData:
             ),
             axis=1
         )
-        df = df.loc[:, ['matrix_dimension', 'speed_up']]
+        df['alpha'] = df['serial_time'] / \
+            (df['serial_time'] + df['parallel_time'])
+        df = df.loc[:, ['alpha', 'speed_up']]
         self.save_df_data(
             df,
             ['speed_up'],
-            'matrix_dimension',
+            'alpha',
             {'speed_up': 'b-'},
             filename,
             True
