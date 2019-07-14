@@ -55,6 +55,15 @@ cantidad de procesadores podemos calcular el speed-up como:
     \textbf{speed\_up} = \dfrac{s+p*N}{s+p}
 \end{equation}
 
+Definiendo:
+\begin{equation}
+    \boldsymbol{\alpha} = \dfrac{s}{s+p}
+\end{equation}
+Podemos decir que:
+\begin{equation}
+    \textbf{speed\_up} = N - \alpha * (N-1)
+\end{equation}
+
 \subsection{Map-reduce}
 
 MapReduce es una técnica de procesamiento y un programa modelo de computación
