@@ -28,7 +28,6 @@ class Process(MapReduce):
             process.join()
             map_responses += process.get_output()
         self.statistics.stop('parallel')
-        print(f"parallel: {self.statistics.get_time_elapsed('parallel')}")
         map_responses = list(filter(lambda x: len(x) != 0, map_responses))
         return self.group_by_key(map_responses)
 
@@ -38,5 +37,4 @@ class Process(MapReduce):
         for item in partitioned_data:
             output.append(self.reduce_func(item))
         self.statistics.stop('serial')
-        print(f"serial: {self.statistics.get_time_elapsed('serial')}")
         return output

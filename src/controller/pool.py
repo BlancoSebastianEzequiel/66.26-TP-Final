@@ -26,7 +26,6 @@ class Pool(MapReduce):
         pool.close()
         pool.join()
         self.statistics.stop('parallel')
-        print(f"parallel: {self.statistics.get_time_elapsed('parallel')}")
         # time.sleep(self.sleep_sec)
         return data
 
@@ -40,6 +39,5 @@ class Pool(MapReduce):
         # pool.close()
         # pool.join()
         self.statistics.stop('serial')
-        print(f"serial: {self.statistics.get_time_elapsed('serial')}")
         # time.sleep(self.sleep_sec)
         return reduced_values
