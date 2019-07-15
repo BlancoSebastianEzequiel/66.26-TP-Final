@@ -1,12 +1,13 @@
 Se propone la verificación empírica de la ley de Amdahl  (trabajo constante)
 versus la ley de  Gustafson (tiempo constante) aplicada a un problema de
 paralelismo utilizando el modelo de programación MapReduce.\\
-Haremos una multiplicación de matrices (ambas de \code{NxN}) y se realizarán las
-mediciones de tiempo variando la cantidad de threads involucrados en el
-procesamiento.\\
-Luego se realizarán las mismas mediciones manteniendo fija la cantidad de
-threads pero variando la dimensión de las matrices.\\
+En Amdahl haremos una multiplicación de matrices (ambas de \code{NxN}) y se
+realizarán las mediciones de tiempo variando la cantidad de threads involucrados
+en el procesamiento.\\
+Luego en Gustafson se realizarán las mismas mediciones aumentando la dimensión
+de las matrices (aumentando el trabajo) y aumentando la cantidad de threads cada
+vez que aumentamos el trabajo.\\
 Finalmente se hará una multiplicación de dos matrices diferentes de \code{NxN}
 usando la librería CBLAS e instrucción de vectorización (MMX) para el compilador
 con solo un procesador. De esta manera la idea es comparar el tiempo que tarda
-el map-reduce en serie frente a cblas y la vectorizacion.
+el map-reduce en serie frente a cblas y la vectorización.
