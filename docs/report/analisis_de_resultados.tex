@@ -14,7 +14,7 @@
     pero solo se obtuvo x2). Hay que tener en cuenta que \code{Pool} tiene que
     duplicar cada bit de memoria utilizada en el cálculo, por lo que puede ser
     costoso.\\
-    También hay que saber que numpy tiene una gran cantidad de funciones
+    También hay que saber que \code{numpy} tiene una gran cantidad de funciones
     caras escritas en C / Fortran y que ya están en paralelo, por lo que no
     se puede hacer mucho para acelerarlas.
 \subsection{Prueba de latecia de pool, python y c}
@@ -26,7 +26,7 @@
     \def\path{test_pool.png}
     \def\scale{.6}
     \input{report/image.tex}
-    Podemos ver que \code{c} es mucho mas eficiente siendo 40 veces mas rápido que
+    Podemos ver que \code{c} es mucho mas eficiente siendo 33 veces mas rápido que
     \code{python}. También podemos ver que usando el módulo \code{pool}, dividiendo
     el trabajo en 4 cores tarda más que el mismo trabajo sin usar \code{pool}
     en python, lo cual demuestra que este módulo es infeficiente como se explicó

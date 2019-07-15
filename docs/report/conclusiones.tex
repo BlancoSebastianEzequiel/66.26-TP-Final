@@ -1,11 +1,23 @@
 Podemos decir que obtuvimos resultados inesperados pero se tuvieron que hacer
-varias corridas y ajustar ciertos números para entender por que llegamos a
-éstos\\
-Se coloco un \code{sleep} de medio segundo (que no afectó el cálculo
-del tiempo paralelo-serie transcurrido) para evitar que cualquier trabajo que no
-sea puramente vinculado a la CPU afecte nuestro porgrama (como por ejemplo I/O) \\\\
+varias corridas y ajustar ciertos números para entender por qué llegamos a
+éstos mismos.\\
+Si bien, al paralelizar, hubo casos donde se obtuvo una mejora, no era la mejora
+esperada. Es decir, cuando se usaban cuatro threads se supone que el tiempo paralelo
+caiga a la cuarta parte y sin embargo se pudo observar que cayó a la mitad. Entonces
+se hicieron pruebas simples comparando la performance de un código \code{c}, un
+código \code{python} y \code{python usando pool}. Se pudo observar que \code{c}
+es mucho mas rápido que \code{python} y que el módulo \code{pool} es muy inefieciente
+como se explicó anteriormente respecto del uso de recursos. Se puede obtener una mejora
+con el módulo \code{pool} si aumentamos considerablemente el trabajo pero, como
+se pudo observar en los resultados de Amdahl, no será una mejora esperada.
+También, respecto del módulo \code{pool}, al aumentar el trabajo para poder observar
+una mejora se tiene la desventaja que la PC se cuelga debido a que \code{pool}
+está haciendo copias útiles de variables (como se explicó anteirormente en la
+sección \code{análisis de resultados}) y ésto hace que el proceso sea muy lento
+y la performance baje considerablemente.
+
 Finalmente podemos decir que hay que tener en cuenta que hay otros programas
-corriendo en las cuatro CPU y que dependiendo del tamaño de informacion que
+corriendo en las cuatro CPU y que dependiendo del tamaño de información que
 manejamos, podemos tener un cuello de botella ya sea por intercambios de memoria
 o por exceso de memoria.
 Entonces se tuvieron que hacer varias corridas analizando el tráfico de
