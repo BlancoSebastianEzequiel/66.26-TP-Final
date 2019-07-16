@@ -1,4 +1,4 @@
 program, time_elapsed, matrix_dim, number_of_threads
-cblas_dgemm, 0.053858, 400, 1
-vectorized blocked_dgemm_sse, 0.109354, 400, 1
-not vectorized blocked_dgemm_sse, 0.366132, 400, 1
+cblas_dgemm, 0.053858,400,1
+vectorized blocked_dgemm_sse, 0.0109354,400,1
+not vectorized blocked_dgemm_sse, 0.366132,400,1
