@@ -17,7 +17,7 @@ def gustafson(model: Type[MultiplyMatricesInterface]):
     name = model.__name__
     print(f"------------RUNNING GUSTAFSON------------")
     output_data = OutputData()
-    for values in [(1, 100), (2, 140), (4, 200)]:
+    for values in [(1, 100), (2, 126), (4, 158)]:
         num_workers, matrix_dim = values
         print(f"RUNNING WITH MATRIX DIMENSION: {matrix_dim}")
         serial, parallel = run(num_workers, matrix_dim, model)
