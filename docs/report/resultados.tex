@@ -82,15 +82,15 @@ speed-up Gustafson se utilizó la ecuación \code{(7)}
     \def\scale{.6}
     \input{report/image.tex}
 
-    Podemos ver que las instrucciones vectoriales en el código
-    \code{blocked\_dgemm\_sse} tienen una mejora considerable respecto del mismo
-    código sin vectorizar y \code{cblas}. Por otro lado vemos que \code{cblas}
-    tiene una considerable mejor performance que el código
+    Se puede ver que las instrucciones vectoriales, en el código
+    \code{blocked\_dgemm\_sse}, tienen una mejora considerable respecto del mismo
+    código sin vectorizar y de \code{cblas}. Por otro lado se puede ver que
+    \code{cblas} tiene una considerable mejor performance que el código
     \code{blocked\_dgemm\_sse} sin vectorizar.
-    De esta manera vemos que \code{cblas} y las instrucciones vectorizadas
+    De esta manera se puede ver que \code{cblas} y las instrucciones vectorizadas
     aprovechan mucho mejor el hardware para la realización de la misma operación.
     También es cierto que el map-reduce hace uso de un módulo de \code{python}
-    llamado \code{pool} que suma latencia al momento de dividir el trabajo ya
+    llamado \code{pool} que suma latencia al momento de dividir el trabajo, ya
     que sufre mucho el costo de la comunicación entre procesadores. En el análisis
     de los resultados se explica con detalle el problema del módulo \code{pool}
     y se muestra una prueba de la diferencia considerable de performance entre
