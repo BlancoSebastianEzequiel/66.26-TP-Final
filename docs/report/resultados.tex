@@ -8,8 +8,8 @@ speed-up Gustafson se utilizó la ecuación \code{(7)}
     Podemos observar que el speed up teórico tiende al máximo speed-up
     mientras que el real nos muestra que no usa toda la paralelizacion ya que al
     pasar de 1 a 2 threads, el tiempo no cae a la mitad, y al pasar de 1 a 4 threads
-    tampoco. Se puede ver que tiene un speed-up de casi 2 lo cual quiere decir que
-    hace uso de la mitad.
+    no cae a la cuarta parte. Se puede ver que tiene un speed-up de casi 2 lo
+    cual quiere decir que hace uso de la mitad.
     }
     \def\analisisGustafson{
     Podemos ver que estos resultados demuestran que la sección serie del
@@ -33,8 +33,8 @@ speed-up Gustafson se utilizó la ecuación \code{(7)}
     Podemos observar que el speed up teórico tiende al máximo speed-up
     mientras que el real nos muestra que no usa toda la paralelizacion ya que al
     pasar de 1 a 2 threads, el tiempo no cae a la mitad, y al pasar de 1 a 4 threads
-    tampoco. Se puede ver que tiene un speed-up de casi 2 lo cual quiere decir que
-    hace uso de la mitad.
+    no cae a la cuarta parte. Se puede ver que tiene un speed-up de casi 2 lo
+    cual quiere decir que hace uso de la mitad.
     }
     \def\analisisGustafson{
     Podemos ver que estos resultados demuestran que la sección serie del
@@ -58,8 +58,8 @@ speed-up Gustafson se utilizó la ecuación \code{(7)}
     Podemos observar que el speed up teórico tiende al máximo speed-up
     mientras que el real nos muestra que no usa toda la paralelizacion ya que al
     pasar de 1 a 2 threads, el tiempo no cae a la mitad, y al pasar de 1 a 4 threads
-    tampoco. Se puede ver que tiene un speed-up de casi 2 lo cual quiere decir que
-    hace uso de la mitad.
+    no cae a la cuarta parte. Se puede ver que tiene un speed-up de casi 2 lo
+    cual quiere decir que hace uso de la mitad.
     }
     \def\analisisGustafson{
     Podemos ver que estos resultados demuestran que la sección serie del
@@ -82,10 +82,11 @@ speed-up Gustafson se utilizó la ecuación \code{(7)}
     \def\scale{.6}
     \input{report/image.tex}
 
-    Podemos ver que \code{cblas} tiene una mejor performance que las instrucciones
-    vectoriales. Por otro lado podemos ver que hay una mejora al usar las
-    instrucciones vectoriales en el código \code{blocked\_dgemm\_sse} respecto del
-    mismo código que no hace uso de las mismas.
+    Podemos ver que las instrucciones vectoriales en el código
+    \code{blocked\_dgemm\_sse} tienen una mejora considerable respecto del mismo
+    código sin vectorizar y \code{cblas}. Por otro lado vemos que \code{cblas}
+    tiene una considerable mejor performance que el código
+    \code{blocked\_dgemm\_sse} sin vectorizar.
     De esta manera vemos que \code{cblas} y las instrucciones vectorizadas
     aprovechan mucho mejor el hardware para la realización de la misma operación.
     También es cierto que el map-reduce hace uso de un módulo de \code{python}
@@ -93,4 +94,4 @@ speed-up Gustafson se utilizó la ecuación \code{(7)}
     que sufre mucho el costo de la comunicación entre procesadores. En el análisis
     de los resultados se explica con detalle el problema del módulo \code{pool}
     y se muestra una prueba de la diferencia considerable de performance entre
-    \code{c}, \code{python} y \code{python usando pool}
+    \code{c}, \code{python} y \code{python usando pool}.
