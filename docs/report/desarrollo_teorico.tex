@@ -65,23 +65,22 @@ Podemos decir que:
 \end{equation}
 
 \subsection{Map-reduce}
-
+\hfill \break
 MapReduce es una técnica de procesamiento y un programa modelo de computación
 distribuida. El algoritmo MapReduce contiene dos tareas importantes.\\\\
-\code{Map} toma un conjunto de datos y se convierte en otro conjunto de datos, en el
+Por un lado, \code{Map} toma un conjunto de datos y lo convierte en otro, en el
 que los elementos se dividen en tuplas \code{(pares: clave, valor)}.\\\\
-En el medio ocurre la fase de agrupamiento la cual consiste de agrupar los valores
-con misma clave en un vector para entregarle a la fase de reduce un conjunto de
-tuplas \code{(clave, valores)} donde en este caso el valor son todos los valores
+En el medio ocurre la fase de agrupamiento, la cual consiste en agrupar los valores
+con la misma clave en una lista, para entregarle a la fase de \code{reduce} un
+conjunto de tuplas \code{(clave, valores)}, donde el valor son todos los valores
 en una lista.\\\\
-\code{Reduce} recibe un conjunto de tuplas \code{(clave, valores)} donde el valor
-es una lista de todos los valores que tenían la misma clave. Entonces reduce
-aplica una función a todos estos valores para retornar un único valor y asi
-devolver un conjunto de tuplas \code{(clave, valor)}\\\\
-La principal ventaja de MapReduce es que es fácil de escalar procesamiento de
+Por otro lado, \code{Reduce} recibe un conjunto de tuplas \code{(clave, valores)},
+y aplica una función a todos estos valores, para poder retornar un único valor y
+así devolver un conjunto de tuplas \code{(clave, valor)}\\\\
+La principal ventaja de MapReduce es su facilidad de escalar procesamiento de
 datos en múltiples nodos.\\
 De acuerdo a este modelo, basado en la programación funcional, la tarea del
-usuario consiste en la definición de una función map y una función reduce y
+usuario consiste en la definición de una función map y una función reduce, y
 definidas estas funciones, el procesamiento es fácilmente paralelizable, ya sea
 en una sola máquina o en un cluster.\\
 

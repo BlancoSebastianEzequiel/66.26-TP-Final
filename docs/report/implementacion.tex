@@ -104,9 +104,9 @@
         posición de salida y la suma.
 
 \subsection{MMX}
-    Se escribió un código en \code{c} donde se multiplicaban dos matrices
-    por bloques. Al momento de hacer la multiplicación parcial de elementos, donde
-    cada elemento es un bloque de la matriz, se usa una intruccion llamada
+    Se escribió un código en \code{c} donde se multiplican dos matrices
+    por bloques. Al momento de hacer la multiplicación parcial de elementos donde
+    cada elemento es un bloque de la matriz, se usa una intrucción llamada
     \code{\#pragma vector always} para decirle al  compilador que la siguiente
     fracción de código será vectoriada.\\
     Este código fue dessarrollado en el archivo \code{blocked\_dgemm\_sse.c} que
