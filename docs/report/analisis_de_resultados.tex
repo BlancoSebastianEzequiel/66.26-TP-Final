@@ -17,19 +17,19 @@
     También hay que saber que \code{numpy} tiene una gran cantidad de funciones
     caras escritas en C / Fortran y que ya están en paralelo, por lo que no
     se puede hacer mucho para acelerarlas.
-\subsection{Prueba de latecia de pool, python y c}
-    A continuación se hizo un calculo el cual requiere iterar unas 10000000 veces
-    y hacer una acumulacion para una suma. Por lo tanto se hizo la misma operación
-    en c, en python y en python pero usando el modulo \code{pool} donde dividimos el
+\subsection{Prueba de latencia de pool, python y c}
+    A continuación se hizo un cálculo el cual requiere iterar unas 10000000 veces
+    y hacer una acumulación para una suma. Por lo tanto se hizo la misma operación
+    en c, en python y en python pero usando el módulo \code{pool} donde dividimos el
     trabajo en 4 procesos.
     \def\text{tiempos de la pruebas en segundos}
     \def\path{test_pool.png}
     \def\scale{.6}
     \input{report/image.tex}
-    Podemos ver que \code{c} es mucho mas eficiente siendo 33 veces mas rápido que
+    Podemos ver que \code{c} es mucho más eficiente siendo 33 veces más rápido que
     \code{python}. También podemos ver que usando el módulo \code{pool}, dividiendo
     el trabajo en 4 cores tarda más que el mismo trabajo sin usar \code{pool}
-    en python, lo cual demuestra que este módulo es infeficiente como se explicó
+    en python, lo cual demuestra que este módulo es ineficiente como se explicó
     anteriormente debido al uso de recursos.
 \subsection{Prueba de multiplicación de matrices con C++}
     A modo de entender lo pagado en eficiencia al utilizar el lenguaje Python, 
@@ -42,4 +42,4 @@
     la hora de compararlo con lenguajes como C o C++ para el cálculo de eficiencia.
     Es por eso, que debemos entender que los resultados obtenidos en este trabajo estan
     muy ligados al lenguaje utilizado y por eso, los resultados obtenidos en C y C++ resultaron
-    de mucho mas eficientes.
+    mucho más eficientes.

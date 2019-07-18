@@ -7,10 +7,10 @@
     \def\scale{.6}
     \input{report/image.tex}
 
-    En nuestro caso creamos una clase llamada \code{MapReduce} la cual usa una
+    En nuestro caso creamos una clase llamada \code{MapReduce}, la cual usa una
     librería de \code{python} llamada \code{multiprocessing} en donde usamos el
-    módulo \code{pool} el cual ofrece un medio conveniente para paralelizar la
-    ejecución de una función a través de múltiples valores de entrada, distribuyendo
+    módulo \code{pool}, el cual ofrece un medio conveniente para paralelizar la
+    ejecución de una función a través de múltiples valores de entrada distribuyendo
     los datos de entrada a través de procesos (paralelismo de datos).\\
 
     Entonces lo que hicimos fue instanciar un \code{pool} para hacer el map de
@@ -36,7 +36,7 @@
         bloques en la matriz B.\\
         Entonces multiplicamos el bloque \code{a} por cada bloque de la lista de
         bloques \code{b} y guardamos en un vector una tupla con una clave
-        \code{r, c\_b} donde \code{c\_b} es el indice en la lista de
+        \code{(r, c\_b)} donde \code{c\_b} es el índice en la lista de
         bloques \code{b} y como valor guardamos la multiplicación. Por cada
         multiplicación, agregamos una de estas tuplas al vector de salida para
         luego devolver éste.
@@ -113,8 +113,8 @@
     se encuentra en el anexo.
 
 \subsection{Cblas}
-    Se uso una función de la librería \code{cblas.h} de \code{c}. Esta función
-    cuya firma es:
+    Se usó una función de la librería \code{cblas.h} de \code{c}. La firma de
+    la función es:
     \lstset{language=C, numbers=left, tabsize=2, escapeinside=||}
     \begin{lstlisting}
     void cblas_dgemm(
@@ -132,7 +132,7 @@
             double *C,
             const int ldc);
     \end{lstlisting}
-    Ésta llamada a la rutina \code{cblas\_dgemm} multiplica dos matrices:
+    La siguiente llamada a la rutina \code{cblas\_dgemm} multiplica dos matrices:
     \begin{lstlisting}
         cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, alpha, A, k, B, n, beta, C, n);
     \end{lstlisting}
@@ -180,7 +180,7 @@
     threads.
 
     \hfill \break
-    Para el caso de Gustafson se usan se multiplican dos matrices de
+    Para el caso de Gustafson se multiplican dos matrices de
     \code{100x100} con 1 thread, dos matrices de \code{126x126} con 2 threads y
     dos matrices de \code{158x158} con 4 threads.
 
