@@ -31,3 +31,15 @@
     el trabajo en 4 cores tarda más que el mismo trabajo sin usar \code{pool}
     en python, lo cual demuestra que este módulo es infeficiente como se explicó
     anteriormente debido al uso de recursos.
+\subsubsection{Prueba de multiplicación de matrices con C++}
+    A modo de entender lo pagado en eficiencia al utilizar el lenguaje Python, 
+    procedimos a realizar la multiplicación de matrices por bloques en C++, un lenguaje
+    muy similar a C, el cual se suele utilizar muy frecuentemente a la hora de buscar
+    eficiencia.
+    Los resultados obtenidos para la multiplicación de matrices por bloques, para el caso
+    de matrices de 400x400 fueron de \textbf{0.178759 seg}. Como era de esperarse, podemos 
+    comprobar, que el uso de un lenguaje de alto nivel como Python, resultó muy costoso a
+    la hora de compararlo con lenguajes como C o C++ para el cálculo de eficiencia.
+    Es por eso, que debemos entender que los resultados obtenidos en este trabajo estan
+    muy ligados al lenguaje utilizado y por eso, los resultados obtenidos en C y C++ resultaron
+    de mucho mas eficientes.
