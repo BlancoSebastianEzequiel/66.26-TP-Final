@@ -25,7 +25,10 @@ def gustafson(model: Type[MultiplyMatricesInterface]):
     if SAVE:
         output_data.save_data(name + '_gustafson_output.png')
         output_data.graph_gustafson_exec_time(name + '_gustafson_exec_time.png')
-        output_data.graph_gustafson_speed_up(name + '_gustafson_speed_up.png')
+        output_data.graph_gustafson_speed_up(
+            name + '_gustafson_fixed_time_speed_up.png')
+        output_data.graph_gustafson_real_speed_up(
+            name + '_gustafson_real_speed_up.png')
         output_data.save_df_data_to_json()
 
 

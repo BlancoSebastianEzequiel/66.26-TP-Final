@@ -234,8 +234,8 @@ class OutputData:
             'number_of_threads'
         ]
         df = df.loc[:, columns]
-        df['speed_up'] = [0] * len(df.index)
-        df['speed_up'] = df.apply(
+        df['fixed_time_speed_up'] = [0] * len(df.index)
+        df['fixed_time_speed_up'] = df.apply(
             lambda x: self.gustafson_speed_up(
                 x['serial_time'],
                 x['parallel_time'],
@@ -245,12 +245,42 @@ class OutputData:
         )
         df['alpha'] = df['serial_time'] / \
             (df['serial_time'] + df['parallel_time'])
-        df = df.loc[:, ['alpha', 'speed_up']]
+        df = df.loc[:, ['alpha', 'fixed_time_speed_up']]
         self.save_df_data(
             df,
-            ['speed_up'],
+            ['fixed_time_speed_up',],
             'alpha',
-            {'speed_up': 'b-'},
+            {'fixed_time_speed_up': 'b-'},
             filename,
             True
         )
+
+    def graph_gustafson_real_speed_up(self, filename):
+        df = pd.DataFrame(data=self.data)
+        columns = [
+            'matrix_dimension',
+            'parallel_time',
+            'serial_time',
+            'number_of_threads'
+        ]
+        df = df.loc[:, columns]
+        df['real_speed_up'] = [0] * len(df.index)
+        df['real_speed_up'] = df.apply(
+            lambda x: self.speed_up(
+                x['serial_time'],
+                x['parallel_time'],
+                self.data['serial_time'][0],
+                self.data['parallel_time'][0]
+            ),
+            axis=1
+        )
+        df = df.loc[:, ['number_of_threads', 'real_speed_up']]
+        self.save_df_data(
+            df,
+            ['real_speed_up'],
+            'number_of_threads',
+            {'real_speed_up': 'r-'},
+            filename,
+            True
+        )
+
